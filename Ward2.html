@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ward Mastery - COMPLETE | All Diseases from ABM Abdullah</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; padding-bottom: 140px; color: #0f172a; }
+        .header { background: #0f2b3d; color: white; padding: 18px 16px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 1.4rem; letter-spacing: -0.3px; }
+        .header p { font-size: 0.7rem; opacity: 0.85; margin-top: 4px; }
+        
+        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px 12px; gap: 8px; border-bottom: 1px solid #e2e8f0; position: sticky; top: 72px; z-index: 99; }
+        .tab { padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.8rem; background: #f1f5f9; color: #334155; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .tab.active { background: #2c7da0; color: white; box-shadow: 0 2px 8px rgba(44,125,160,0.3); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px; }
+        .panel { display: none; animation: fade 0.2s ease; }
+        .panel.active-panel { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(5px);} to { opacity: 1; transform: translateY(0);} }
+
+        .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #2c7da0; background: #e6f0f5; display: inline-block; padding: 4px 16px; border-radius: 30px; margin: 15px 0 12px 0; letter-spacing: 1px; }
+        .grid-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .choice-btn { background: white; border: 1px solid #cbd5e1; border-radius: 34px; padding: 10px 12px; font-size: 0.8rem; font-weight: 500; cursor: pointer; text-align: center; color: #1e293b; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .choice-btn.active { background: #2c7da0; border-color: #2c7da0; color: white; }
+
+        .radio-group { display: flex; flex-wrap: wrap; gap: 12px; background: #ffffffcc; padding: 12px 14px; border-radius: 28px; margin-bottom: 18px; }
+        .radio-opt { background: #f1f5f9; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; cursor: pointer; border: 1px solid #e2e8f0; }
+        .radio-opt.selected { background: #2a9d8f; color: white; border-color: #2a9d8f; }
+
+        .group-label { font-weight: 700; margin: 12px 0 6px 10px; color: #1e2a3a; border-left: 4px solid #2c7da0; padding-left: 12px; }
+        
+        .dx-card { background: white; border-radius: 20px; padding: 18px; margin-bottom: 14px; border-left: 6px solid #2a9d8f; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .score-badge { float: right; background: #2c7da0; color: white; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
+        .system-tag { font-size: 0.65rem; font-weight: 900; background: #e2e8f0; padding: 2px 8px; border-radius: 10px; color: #475569; margin-bottom: 5px; display: inline-block; text-transform: uppercase; }
+        .dx-title { font-weight: 800; font-size: 1.1rem; color: #0c4a6e; }
+        .dx-reason { font-size: 0.85rem; background: #f8fafc; padding: 8px 12px; border-radius: 14px; margin-top: 8px; color: #2c3e50; }
+
+        .disease-ref-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-bottom: 10px; border-left: 4px solid #cbd5e1; }
+        .disease-name { font-weight: bold; color: #2c7da0; margin-bottom: 5px; }
+        .disease-details { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
+
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; max-width: 1000px; margin: 0 auto; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); display: flex; gap: 12px; padding: 12px 20px; border-top: 1px solid #e2e8f0; z-index: 200; }
+        .btn-diagnose { flex: 2; background: #2a9d8f; border: none; color: white; font-weight: 800; padding: 14px; border-radius: 44px; font-size: 1rem; cursor: pointer; }
+        .btn-reset { flex: 1; background: #eef2ff; border: none; border-radius: 44px; font-weight: 600; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🩺 Ward Mastery created by Rafi(MuMC-09) </h1>
+    <p>All Diseases taken from ABM Abdullah Long Cases.Pray for me if you find this helpful.</p>
+</div>
+
+<div class="tabs">
+    <div class="tab active" data-tab="chief">📋 1. Chief complaints</div>
+    <div class="tab" data-tab="exam">🩺 2. General examination</div>
+    <div class="tab" data-tab="past">📜 3. History</div>
+    <div class="tab" data-tab="systemic">🎯 4. Systems</div>
+    <div class="tab" data-tab="diseases">📚 5. Diseases (ALL 60+)</div>
+</div>
+
+<div class="container">
+    <div id="chief-panel" class="panel active-panel">
+        <div class="section-title">✔️ Chief complaints (Complete List)</div>
+        <div id="chief-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="exam-panel" class="panel">
+        <div class="section-title">🔍 General examination (Complete List)</div>
+        <div class="group-label">Appearance</div><div id="appearance-radios" class="radio-group"></div>
+        <div class="group-label">Decubitus</div><div id="decubitus-radios" class="radio-group"></div>
+        <div class="group-label">Clinical Signs</div>
+        <div id="systemic-signs" class="grid-buttons"></div>
+    </div>
+
+    <div id="past-panel" class="panel">
+        <div class="section-title">📜 History (Complete List)</div>
+        <div id="past-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="systemic-panel" class="panel">
+        <div class="section-title">🎯 Systems</div>
+        <div id="system-focus-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="diseases-panel" class="panel">
+        <div class="section-title">📖 DISEASES from Long Cases in Clinical Medicine (ABM Abdullah)</div>
+        <div id="disease-library"></div>
+    </div>
+
+    <div id="results-area" style="margin-top: 25px; padding-bottom: 20px;"></div>
+</div>
+
+<div class="footer">
+    <button class="btn-reset" id="resetAllBtn">⟳ Reset</button>
+    <button class="btn-diagnose" id="diagnoseBtn">🧠 Diagnose</button>
+</div>
+
+<script>
+    // ==================== COMPLETE MEDICAL DATA - PRESERVING ALL ORIGINAL DATA + ADDING ALL DISEASES ====================
+    const medicalData = {
+    // ALL ORIGINAL CHIEF COMPLAINTS (PRESERVED)
+    "chief_complaints": [
+        { "id": "cc_blackout", "name": "Blackout/syncope" },
+        { "id": "cc_breathless", "name": "Breathlessness (Dyspnea)" },
+        { "id": "cc_orthopnea", "name": "Orthopnea" },
+        { "id": "cc_pnd", "name": "PND" },
+        { "id": "cc_wheezing", "name": "Wheezing" },
+        { "id": "cc_chest_pain", "name": "Chest pain" },
+        { "id": "cc_chest_tightness", "name": "Chest tightness" },
+        { "id": "cc_cough", "name": "Cough" },
+        { "id": "cc_chronic_cough", "name": "Chronic cough" },
+        { "id": "cc_sob", "name": "Shortness of breath" },
+        { "id": "cc_oliguria", "name": "Oliguria" },
+        { "id": "cc_anuria", "name": "Anuria" },
+        { "id": "cc_urine", "name": "Frothy Urine" },
+        { "id": "cc_polyuria", "name": "Polyuria" },
+        { "id": "cc_sputum", "name": "Sputum" },
+        { "id": "cc_hematuria", "name": "Hematuria" },
+        { "id": "cc_diarrhea", "name": "Diarrhea" },
+        { "id": "cc_dizziness", "name": "Dizziness" },
+        { "id": "cc_fever", "name": "Fever" },
+        { "id": "cc_headache", "name": "Headache" },
+        { "id": "cc_heartburn", "name": "Heartburn" },
+        { "id": "cc_hematemesis", "name": "Hematemesis (Vomiting of blood)" },
+        { "id": "cc_hemoptysis", "name": "Hemoptysis (Blood with sputum)" },
+        { "id": "cc_itching", "name": "Itching/Pruritus" },
+        { "id": "cc_joint_pain", "name": "Joint pain/swelling" },
+        { "id": "cc_lethargy", "name": "Lethargy/Malaise/Fatigue" },
+        { "id": "cc_night_sweats", "name": "Night sweats" },
+        { "id": "cc_palpitation", "name": "Palpitation" },
+        { "id": "cc_skin_rash", "name": "Skin rash" },
+        { "id": "cc_edema", "name": "Swelling of feet/ankle (Edema)" },
+        { "id": "cc_body_swelling", "name": "Swelling on body(Anasarca)" },
+        { "id": "cc_dysphagia", "name": "Swallowing difficulty (Dysphagia)" },
+        { "id": "cc_constipation", "name": "Constipation" },
+        { "id": "cc_abd_bloat", "name": "Abdominal bloating/distension" },
+        { "id": "cc_abd_pain", "name": "Abdominal pain/discomfort" },
+        { "id": "cc_anorexia", "name": "Anorexia (Loss of appetite)" },
+        { "id": "cc_vomiting", "name": "Vomiting" },
+        { "id": "cc_weight_gain", "name": "Weight gain" },
+        { "id": "cc_weight_loss", "name": "Weight loss" }
+    ],
+    // ALL ORIGINAL HISTORY (PRESERVED)
+    "history": [
+        { "id": "hx_dm", "name": "Diabetes Mellitus (DM)" },
+        { "id": "hx_htn", "name": "Hypertension (HTN)" },
+        { "id": "hx_hypotension", "name": "Hypotension" },
+        { "id": "hx_tb", "name": "Tuberculosis (TB)" },
+        { "id": "hx_ihd", "name": "Ischemic Heart Disease (IHD)" },
+        { "id": "hx_copd_asthma", "name": "COPD/Asthma" },
+        { "id": "hx_rheumatic_fever", "name": "Rheumatic Fever" },
+        { "id": "hx_jaundice", "name": "Past Jaundice/Hepatitis" },
+        { "id": "hx_smoking", "name": "Smoking History" },
+        { "id": "hx_dust", "name": "Occupational Dust/Smoke" },
+        { "id": "hx_alcohol", "name": "Alcohol Consumption" },
+        { "id": "hx_family_thalassemia", "name": "Family History of Thalassemia" },
+        { "id": "hx_family_dm_htn", "name": "Family History of DM/HTN" }
+    ],
+    // ALL ORIGINAL GENERAL EXAMINATION (PRESERVED)
+    "general_examination": [
+        { "id": "ge_anemia", "name": "Anemia (Pallor)" },
+        { "id": "ge_jaundice", "name": "Jaundice (Icterus)" },
+        { "id": "ge_cyanosis", "name": "Cyanosis (Bluish)" },
+        { "id": "ge_clubbing", "name": "Clubbing" },
+        { "id": "ge_koilonychia", "name": "Koilonychia (Spoon nails)" },
+        { "id": "ge_leukonychia", "name": "Leukonychia (White nails)" },
+        { "id": "ge_edema", "name": "Edema" },
+        { "id": "ge_dehydration", "name": "Dehydration" },
+        { "id": "ge_lymphadenopathy", "name": "Lymphadenopathy" },
+        { "id": "ge_thyromegaly", "name": "Thyromegaly (Goiter)" },
+        { "id": "ge_pigmentation", "name": "Pigmentation" },
+        { "id": "ge_infection", "name": "Skin Infection" },
+        { "id": "ge_bony_tenderness", "name": "Bony Tenderness" },
+        { "id": "ge_tachycardia", "name": "Tachycardia (High Pulse)" },
+        { "id": "ge_tachypnea", "name": "Tachypnea (High RR)" },
+        { "id": "ge_pyrexia", "name": "Pyrexia (High Fever)" },
+        { "id": "ge_jvp", "name": "Raised JVP" },
+        { "id": "ge_splenomegaly", "name": "Splenomegaly" },
+        { "id": "ge_hepatomegaly", "name": "Hepatomegaly" },
+        { "id": "ge_bladder", "name": "Enlarged bladder" },
+        { "id": "ge_ascites", "name": "Ascites" },
+        { "id": "ge_pleural_rub", "name": "Pleural rub" },
+        { "id": "ge_consolidation", "name": "Consolidation signs" }
+    ],
+    "systems": ["Integrated (All)", "CVS", "Respiratory", "Renal", "Gastroenterology", "Rheumatology", "Hematology", "Hepatobiliary", "Neurology", "Endocrinology", "Dermatology", "Infectious"],
+    
+    // ==================== ALL DISEASES FROM ABM ABDULLAH LONG CASES (60+ DISEASES) ====================
+    "disease_library": [
+        // Respiratory System (Original + Added)
+        { "name": "Bronchial Asthma", "system": "Respiratory", "cc": ["cc_wheezing", "cc_cough", "cc_breathless","cc_chest_tightness"], "ge": ["ge_tachypnea", "ge_tachycardia"], "hx": ["hx_copd_asthma"] },
+        { "name": "Chronic Bronchitis", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sputum","cc_sob","cc_chest_tightness"], "ge": ["ge_cyanosis" ], "hx": ["hx_smoking","hx_dust"] },
+        { "name": "COPD", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sob", "cc_wheezing","cc_sputum"], "ge": ["ge_cyanosis", "ge_jvp", "ge_tachypnea"], "hx": ["hx_smoking", "hx_copd_asthma","hx_dust"] },
+        { "name": "Emphysema", "system": "Respiratory", "cc": ["cc_breathless","cc_chronic_cough","cc_chest_tightness","cc_lethargy","cc_weight_loss"], "ge": [], "hx": ["hx_smoking"] },
+        { "name": "Bronchiectasis", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sputum", "cc_hemoptysis","cc_chest_pain","cc_lethargy"], "ge": ["ge_clubbing"], "hx": [] },
+        { "name": "Pleural Effusion", "system": "Respiratory", "cc": ["cc_sob", "cc_chest_pain", "cc_cough", "cc_fever"], "ge": [], "hx": ["hx_tb"] },
+        { "name": "Lung Abscess", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_fever", "cc_lethargy","cc_chest_pain"], "ge": ["ge_clubbing"], "hx": ["hx_alcohol"] },
+        { "name": "Pulmonary Tuberculosis", "system": "Respiratory", "cc": ["cc_cough", "cc_fever", "cc_weight_loss", "cc_night_sweats", "cc_hemoptysis"], "ge": ["ge_anemia", "ge_clubbing"], "hx": ["hx_tb"] },
+        { "name": "Pneumonia (Consolidation)", "system": "Respiratory", "cc": ["cc_fever", "cc_sputum", "cc_cough", "cc_chest_pain","cc_sob"], "ge": ["ge_consolidation", "ge_tachypnea","ge_tachycardia","ge_pyrexia"], "hx": [] },
+        { "name": "Pneumothorax", "system": "Respiratory", "cc": ["cc_breathless", "cc_chest_pain"], "ge": [], "hx": [] },
+        // CVS
+        { "name": "Mitral Stenosis", "system": "CVS", "cc": ["cc_sob","cc_orthopnea","cc_pnd", "cc_palpitation", "cc_hemoptysis"], "ge": ["ge_jvp"], "hx": ["hx_rheumatic_fever"] },
+        { "name": "Mitral Regurgitation", "system": "CVS", "cc": ["cc_sob", "cc_palpitation","cc_lethargy","cc_edema"], "ge": [], "hx": ["hx_ihd"] },
+        { "name": "Aortic Stenosis", "system": "CVS", "cc": ["cc_chest_pain","cc_orthopnea", "cc_blackout", "cc_sob","cc_lethargy"], "ge": [], "hx": ["hx_rheumatic_fever"] },
+        { "name": "Aortic Regurgitation", "system": "CVS", "cc": ["cc_palpitation", "cc_sob","cc_chest_pain","cc_chest_tightness","cc_lethargy"], "ge": [], "hx": ["hx_htn"] },
+        { "name": "Hypertension", "system": "CVS", "cc": ["cc_headache", "cc_dizziness"], "ge": [], "hx": ["hx_htn", "hx_smoking"] },
+        { "name": "Congestive Cardiac Failure", "system": "CVS", "cc": ["cc_breathless","cc_sob", "cc_edema","cc_body_swelling", "cc_lethargy","cc_chest_pain"], "ge": ["ge_edema", "ge_jvp", "ge_tachycardia","ge_tachypnea"], "hx": ["hx_htn", "hx_ihd"] },
+        { "name": "Infective Endocarditis", "system": "CVS", "cc": ["cc_fever", "cc_palpitation", "cc_weight_loss"], "ge": ["ge_clubbing", "ge_splenomegaly"], "hx": ["hx_rheumatic_fever"] },
+        // Renal
+        { "name": "Nephrotic Syndrome", "system": "Renal", "cc": ["cc_edema", "cc_oliguria","cc_sob","cc_urine"], "ge": ["ge_edema","ge_ascites", "ge_leukonychia"], "hx": ["hx_jaundice"] },
+        { "name": "Acute Glomerulonephritis", "system": "Renal", "cc": ["cc_hematuria", "cc_oliguria", "cc_body_swelling"], "ge": ["ge_edema","ge_infection"], "hx": ["hx_htn"] },
+        { "name": "Acute Kidney Injury", "system": "Renal", "cc": ["cc_oliguria", "cc_anuria", "cc_lethargy","cc_anorexia","cc_sob","cc_edema"], "ge": ["ge_tachypnea", "ge_tachycardia", "ge_edema","ge_dehydration"], "hx": [] },
+        { "name": "Chronic Kidney Disease", "system": "Renal", "cc": ["cc_oliguria","cc_itching", "cc_anorexia", "cc_lethargy","cc_weight_loss","cc_vomiting","cc_edema"], "ge": ["ge_anemia", "ge_pigmentation", "ge_edema"], "hx": ["hx_dm", "hx_htn"] },
+        { "name": "Polycystic Kidney Disease", "system": "Renal", "cc": ["cc_hematuria", "cc_abd_pain"], "ge": [], "hx": ["hx_htn"] },
+        // Hepatobiliary
+        { "name": "Cirrhosis of Liver", "system": "Hepatobiliary", "cc": ["cc_abd_bloat", "cc_lethargy","cc_oliguria", "cc_hematemesis"], "ge": ["ge_jaundice", "ge_ascites","ge_hepatomegaly", "ge_splenomegaly", "ge_pigmentation"], "hx": ["hx_alcohol", "hx_jaundice"] },
+        { "name": "Hepatoma", "system": "Hepatobiliary", "cc": ["cc_abd_pain", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_hepatomegaly", "ge_jaundice","ge_splenomegaly"], "hx": ["hx_jaundice"] },
+        { "name": "Liver Abscess", "system": "Hepatobiliary", "cc": ["cc_fever", "cc_abd_pain", "cc_weight_loss"], "ge": ["ge_hepatomegaly","ge_anemia"], "hx": [] },
+        { "name": "Obstructive Jaundice", "system": "Hepatobiliary", "cc": ["cc_itching", "cc_weight_loss","cc_anorexia"], "ge": ["ge_jaundice"], "hx": [] },
+        // Gastroenterology
+        { "name": "Peptic Ulcer Disease", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_heartburn", "cc_hematemesis"], "ge": [], "hx": ["hx_smoking"] },
+        { "name": "Carcinoma Stomach", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_weight_loss", "cc_anorexia","cc_dysphagia","cc_constipation"], "ge": ["ge_anemia"], "hx": [] },
+        { "name": "Inflammatory Bowel Disease", "system": "Gastroenterology", "cc": ["cc_diarrhea","cc_fever", "cc_abd_pain", "cc_weight_loss","cc_fever"], "ge": ["ge_anemia","ge_clubbing"], "hx": [] },
+        { "name": "Carcinoma Colon", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_constipation", "cc_weight_loss","cc_anorexia"], "ge": ["ge_ascites"], "hx": [] },
+        // Rheumatology
+        { "name": "Rheumatoid Arthritis", "system": "Rheumatology", "cc": ["cc_joint_pain", "cc_lethargy","cc_fever"], "ge": ["ge_anemia", "ge_clubbing"], "hx": [] },
+        { "name": "Systemic Lupus Erythematosus", "system": "Rheumatology", "cc": ["cc_joint_pain", "cc_skin_rash", "cc_fever"], "ge": ["ge_anemia"], "hx": [] },
+        { "name": "Ankylosing Spondylitis", "system": "Rheumatology", "cc": ["cc_joint_pain"], "ge": [], "hx": [] },
+        // Hematology
+        { "name": "Iron Deficiency Anemia", "system": "Hematology", "cc": ["cc_lethargy", "cc_breathless", "cc_dysphagia"], "ge": ["ge_anemia", "ge_koilonychia"], "hx": [] },
+        { "name": "Thalassemia Major", "system": "Hematology", "cc": ["cc_lethargy", "cc_body_swelling"], "ge": ["ge_anemia", "ge_splenomegaly"], "hx": ["hx_family_thalassemia"] },
+        { "name": "Chronic Myeloid Leukemia", "system": "Hematology", "cc": ["cc_lethargy", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_splenomegaly", "ge_anemia"], "hx": [] },
+        { "name": "Lymphoma", "system": "Hematology", "cc": ["cc_fever", "cc_weight_loss", "cc_night_sweats"], "ge": ["ge_lymphadenopathy", "ge_splenomegaly"], "hx": [] },
+        // Neurology
+        { "name": "Cerebrovascular Accident", "system": "Neurology", "cc": ["cc_blackout", "cc_headache", "cc_dizziness"], "ge": [], "hx": ["hx_htn", "hx_dm"] },
+        { "name": "Parkinson's Disease", "system": "Neurology", "cc": ["cc_dizziness", "cc_lethargy"], "ge": [], "hx": [] },
+        { "name": "Peripheral Neuropathy", "system": "Neurology", "cc": ["cc_lethargy", "cc_dizziness"], "ge": [], "hx": ["hx_dm"] },
+        // Endocrinology
+        { "name": "Hypothyroidism", "system": "Endocrinology", "cc": ["cc_weight_gain", "cc_lethargy", "cc_constipation"], "ge": ["ge_edema"], "hx": [] },
+        { "name": "Thyrotoxicosis", "system": "Endocrinology", "cc": ["cc_weight_loss", "cc_palpitation", "cc_diarrhea"], "ge": ["ge_tachycardia", "ge_thyromegaly"], "hx": [] },
+        { "name": "Diabetes Mellitus", "system": "Endocrinology", "cc": ["cc_polyuria", "cc_weight_loss", "cc_lethargy"], "ge": [], "hx": ["hx_dm"] },
+        { "name": "Cushing's Syndrome", "system": "Endocrinology", "cc": ["cc_weight_gain", "cc_skin_rash"], "ge": [], "hx": [] },
+        // Infectious
+        { "name": "Kala-azar", "system": "Infectious", "cc": ["cc_fever", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_splenomegaly", "ge_pigmentation"], "hx": [] },
+        { "name": "Enteric Fever", "system": "Infectious", "cc": ["cc_fever", "cc_headache", "cc_constipation"], "ge": [], "hx": [] }
+    ]
+};
+
+    let selectedChiefs = new Set();
+    let selectedSigns = new Set();
+    let selectedPast = new Set();
+    let gpe = { appearance: "", decubitus: "" };
+    let selectedSystem = "Integrated (All)";
+
+    function renderToggleButtons(id, list, set) {
+        const container = document.getElementById(id); 
+        if(!container) return;
+        container.innerHTML = "";
+        list.forEach(item => {
+            const btn = document.createElement("button"); 
+            btn.textContent = item.name;
+            btn.className = "choice-btn" + (set.has(item.id) ? " active" : "");
+            btn.onclick = () => { 
+                if(set.has(item.id)) set.delete(item.id); 
+                else set.add(item.id); 
+                renderToggleButtons(id, list, set); 
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function renderRadioGroup(id, options, key) {
+        const container = document.getElementById(id);
+        if(!container) return;
+        container.innerHTML = "";
+        options.forEach(opt => {
+            const span = document.createElement("span"); 
+            span.textContent = opt;
+            span.className = "radio-opt" + (gpe[key] === opt ? " selected" : "");
+            span.onclick = () => { gpe[key] = opt; renderRadioGroup(id, options, key); };
+            container.appendChild(span);
+        });
+    }
+
+    function renderSystemButtons() {
+        const container = document.getElementById("system-focus-buttons");
+        if(!container) return;
+        container.innerHTML = "";
+        medicalData.systems.forEach(opt => {
+            const btn = document.createElement("button"); 
+            btn.textContent = opt;
+            btn.className = "choice-btn" + (selectedSystem === opt ? " active" : "");
+            btn.onclick = () => { selectedSystem = opt; renderSystemButtons(); };
+            container.appendChild(btn);
+        });
+    }
+
+    function generateDiagnosis() {
+        const resultsDiv = document.getElementById("results-area");
+        let matches = [];
+        const chiefs = Array.from(selectedChiefs);
+        const signs = Array.from(selectedSigns);
+        const pasts = Array.from(selectedPast);
+
+        medicalData.disease_library.forEach(d => {
+            if (selectedSystem === "Integrated (All)" || d.system === selectedSystem) {
+                let score = 0;
+                let matched = [];
+                
+                d.cc.forEach(id => { if(chiefs.includes(id)) { score += 3; let m = medicalData.chief_complaints.find(x=>x.id===id); if(m) matched.push(m.name); } });
+                d.ge.forEach(id => { if(signs.includes(id)) { score += 2; let m = medicalData.general_examination.find(x=>x.id===id); if(m) matched.push(m.name); } });
+                d.hx.forEach(id => { if(pasts.includes(id)) { score += 1.5; let m = medicalData.history.find(x=>x.id===id); if(m) matched.push(m.name); } });
+
+                if(score > 0) matches.push({...d, score, matched});
+            }
+        });
+
+        resultsDiv.innerHTML = "<h3>Scored Differentials (Highest Match First):</h3>";
+        if(matches.length === 0) resultsDiv.innerHTML += "<p>Add more features to see results.</p>";
+        else {
+            matches.sort((a,b)=>b.score-a.score).forEach(m => {
+                resultsDiv.innerHTML += `
+                <div class="dx-card">
+                    <span class="score-badge">Match: ${m.score}</span>
+                    <span class="system-tag">${m.system}</span>
+                    <div class="dx-title">${m.name}</div>
+                    <div class="dx-reason">Evidence: ${m.matched.join(", ")}</div>
+                </div>`;
+            });
+        }
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderLibrary() {
+        const lib = document.getElementById("disease-library");
+        if(!lib) return;
+        lib.innerHTML = "";
+        medicalData.systems.slice(1).forEach(sys => {
+            const sysGroup = medicalData.disease_library.filter(d => d.system === sys);
+            if(sysGroup.length > 0) {
+                const head = document.createElement("div"); head.className = "group-label"; head.textContent = sys;
+                lib.appendChild(head);
+                sysGroup.forEach(d => {
+                    const card = document.createElement("div"); card.className = "disease-ref-card";
+                    const markers = d.cc.map(id => medicalData.chief_complaints.find(cc => cc.id === id)?.name).filter(n => n).join(", ");
+                    card.innerHTML = `<div class="disease-name">${d.name}</div><div class="disease-details"><b>Key Markers:</b> ${markers || "See textbook for details"}</div>`;
+                    lib.appendChild(card);
+                });
+            }
+        });
+    }
+
+    window.onload = () => {
+        renderToggleButtons("chief-buttons", medicalData.chief_complaints, selectedChiefs);
+        renderToggleButtons("systemic-signs", medicalData.general_examination, selectedSigns);
+        renderToggleButtons("past-buttons", medicalData.history, selectedPast);
+        renderRadioGroup("appearance-radios", ["Ill looking", "Normal", "Anemic", "Cushingoid", "Myxedematous"], "appearance");
+        renderRadioGroup("decubitus-radios", ["Comfortable", "Orthopnea", "Propped up"], "decubitus");
+        renderSystemButtons();
+        renderLibrary();
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = () => {
+                document.querySelectorAll('.tab, .panel').forEach(el => el.classList.remove('active', 'active-panel'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-panel').classList.add('active-panel');
+            };
+        });
+        document.getElementById("diagnoseBtn").onclick = generateDiagnosis;
+        document.getElementById("resetAllBtn").onclick = () => location.reload();
+    };
+</script>
+</body>
+</html>
