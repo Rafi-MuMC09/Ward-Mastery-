@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ward Mastery - COMPLETE | All Diseases from ABM Abdullah</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #f1f5f9; padding-bottom: 140px; color: #0f172a; }
+        .header { background: #0f2b3d; color: white; padding: 18px 16px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 1.4rem; letter-spacing: -0.3px; }
+        .header p { font-size: 0.7rem; opacity: 0.85; margin-top: 4px; }
+        
+        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px 12px; gap: 8px; border-bottom: 1px solid #e2e8f0; position: sticky; top: 72px; z-index: 99; }
+        .tab { padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.8rem; background: #f1f5f9; color: #334155; cursor: pointer; white-space: nowrap; transition: 0.2s; }
+        .tab.active { background: #2c7da0; color: white; box-shadow: 0 2px 8px rgba(44,125,160,0.3); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 16px; }
+        .panel { display: none; animation: fade 0.2s ease; }
+        .panel.active-panel { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(5px);} to { opacity: 1; transform: translateY(0);} }
+
+        .section-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #2c7da0; background: #e6f0f5; display: inline-block; padding: 4px 16px; border-radius: 30px; margin: 15px 0 12px 0; letter-spacing: 1px; }
+        .grid-buttons { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .choice-btn { background: white; border: 1px solid #cbd5e1; border-radius: 34px; padding: 10px 12px; font-size: 0.8rem; font-weight: 500; cursor: pointer; text-align: center; color: #1e293b; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .choice-btn.active { background: #2c7da0; border-color: #2c7da0; color: white; }
+
+        .radio-group { display: flex; flex-wrap: wrap; gap: 12px; background: #ffffffcc; padding: 12px 14px; border-radius: 28px; margin-bottom: 18px; }
+        .radio-opt { background: #f1f5f9; padding: 6px 18px; border-radius: 40px; font-size: 0.8rem; cursor: pointer; border: 1px solid #e2e8f0; }
+        .radio-opt.selected { background: #2a9d8f; color: white; border-color: #2a9d8f; }
+
+        .group-label { font-weight: 700; margin: 12px 0 6px 10px; color: #1e2a3a; border-left: 4px solid #2c7da0; padding-left: 12px; }
+        
+        .dx-card { background: white; border-radius: 20px; padding: 18px; margin-bottom: 14px; border-left: 6px solid #2a9d8f; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .score-badge { float: right; background: #2c7da0; color: white; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
+        .system-tag { font-size: 0.65rem; font-weight: 900; background: #e2e8f0; padding: 2px 8px; border-radius: 10px; color: #475569; margin-bottom: 5px; display: inline-block; text-transform: uppercase; }
+        .dx-title { font-weight: 800; font-size: 1.1rem; color: #0c4a6e; }
+        .dx-reason { font-size: 0.85rem; background: #f8fafc; padding: 8px 12px; border-radius: 14px; margin-top: 8px; color: #2c3e50; }
+
+        .disease-ref-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 15px; padding: 15px; margin-bottom: 10px; border-left: 4px solid #cbd5e1; }
+        .disease-name { font-weight: bold; color: #2c7da0; margin-bottom: 5px; }
+        .disease-details { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
+
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; max-width: 1000px; margin: 0 auto; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); display: flex; gap: 12px; padding: 12px 20px; border-top: 1px solid #e2e8f0; z-index: 200; }
+        .btn-diagnose { flex: 2; background: #2a9d8f; border: none; color: white; font-weight: 800; padding: 14px; border-radius: 44px; font-size: 1rem; cursor: pointer; }
+        .btn-reset { flex: 1; background: #eef2ff; border: none; border-radius: 44px; font-weight: 600; cursor: pointer; }
+
+        /* Questions Section Styles */
+        .q-type-btn { background: white; border: 2px solid #2c7da0; border-radius: 14px; padding: 14px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer; text-align: center; color: #2c7da0; transition: 0.2s; }
+        .q-type-btn.active { background: #2c7da0; color: white; }
+        .q-subtype-btn { background: white; border: 1px solid #cbd5e1; border-radius: 34px; padding: 8px 16px; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-align: center; color: #1e293b; transition: 0.2s; white-space: nowrap; }
+        .q-subtype-btn.active { background: #2a9d8f; border-color: #2a9d8f; color: white; }
+        .q-subtype-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; padding: 12px; background: #f8fafc; border-radius: 16px; }
+        .q-card { background: white; border-radius: 16px; padding: 16px 18px; margin-bottom: 10px; border-left: 5px solid #2c7da0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .q-card ul { list-style: none; padding: 0; margin: 0; }
+        .q-card ul li { padding: 6px 0 6px 14px; font-size: 0.85rem; color: #1e293b; border-bottom: 1px solid #f1f5f9; position: relative; line-height: 1.5; }
+        .q-card ul li:last-child { border-bottom: none; }
+        .q-card ul li::before { content: "▶"; position: absolute; left: 0; color: #2c7da0; font-size: 0.55rem; top: 9px; }
+        .q-card-title { font-weight: 800; font-size: 0.95rem; color: #0c4a6e; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid #e6f0f5; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🩺 Ward Mastery created by Rafi(MuMC-09) </h1>
+    <p>All Diseases taken from ABM Abdullah Long Cases.Pray for me if you find this helpful.</p>
+</div>
+
+<div class="tabs">
+    <div class="tab active" data-tab="chief">📋 1. Chief complaints</div>
+    <div class="tab" data-tab="exam">🩺 2. General examination</div>
+    <div class="tab" data-tab="past">📜 3. History</div>
+    <div class="tab" data-tab="systemic">🎯 4. Systems</div>
+    <div class="tab" data-tab="diseases">📚 5. Diseases (ALL 60+)</div>
+    <div class="tab" data-tab="questions">❓ 6. Questions</div>
+</div>
+
+<div class="container">
+    <div id="chief-panel" class="panel active-panel">
+        <div class="section-title">✔️ Chief complaints (Complete List)</div>
+        <div id="chief-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="exam-panel" class="panel">
+        <div class="section-title">🔍 General examination (Complete List)</div>
+        <div class="group-label">Appearance</div><div id="appearance-radios" class="radio-group"></div>
+        <div class="group-label">Decubitus</div><div id="decubitus-radios" class="radio-group"></div>
+        <div class="group-label">Clinical Signs</div>
+        <div id="systemic-signs" class="grid-buttons"></div>
+    </div>
+
+    <div id="past-panel" class="panel">
+        <div class="section-title">📜 History (Complete List)</div>
+        <div id="past-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="systemic-panel" class="panel">
+        <div class="section-title">🎯 Systems</div>
+        <div id="system-focus-buttons" class="grid-buttons"></div>
+    </div>
+
+    <div id="diseases-panel" class="panel">
+        <div class="section-title">📖 DISEASES from Long Cases in Clinical Medicine (ABM Abdullah)</div>
+        <div id="disease-library"></div>
+    </div>
+
+    <div id="questions-panel" class="panel">
+        <div class="section-title">❓ Questions (From ABM Abdullah Long Cases)</div>
+        <div class="grid-buttons" id="questions-type-buttons"></div>
+        <div id="questions-subtype-area"></div>
+        <div id="questions-content-area"></div>
+    </div>
+
+    <div id="results-area" style="margin-top: 25px; padding-bottom: 20px;"></div>
+</div>
+
+<div class="footer">
+    <button class="btn-reset" id="resetAllBtn">⟳ Reset</button>
+    <button class="btn-diagnose" id="diagnoseBtn">🧠 Diagnose</button>
+</div>
+
+<script>
+    // ==================== COMPLETE MEDICAL DATA - PRESERVING ALL ORIGINAL DATA + ADDING ALL DISEASES ====================
+    const medicalData = {
+    // ALL ORIGINAL CHIEF COMPLAINTS (PRESERVED)
+    "chief_complaints": [
+        { "id": "cc_blackout", "name": "Blackout/syncope" },
+        { "id": "cc_breathless", "name": "Breathlessness (Dyspnea)" },
+        { "id": "cc_orthopnea", "name": "Orthopnea" },
+        { "id": "cc_pnd", "name": "PND" },
+        { "id": "cc_wheezing", "name": "Wheezing" },
+        { "id": "cc_chest_pain", "name": "Chest pain" },
+        { "id": "cc_chest_tightness", "name": "Chest tightness" },
+        { "id": "cc_cough", "name": "Cough" },
+        { "id": "cc_chronic_cough", "name": "Chronic cough" },
+        { "id": "cc_sob", "name": "Shortness of breath" },
+        { "id": "cc_oliguria", "name": "Oliguria" },
+        { "id": "cc_anuria", "name": "Anuria" },
+        { "id": "cc_urine", "name": "Frothy Urine" },
+        { "id": "cc_polyuria", "name": "Polyuria" },
+        { "id": "cc_sputum", "name": "Sputum" },
+        { "id": "cc_hematuria", "name": "Hematuria" },
+        { "id": "cc_diarrhea", "name": "Diarrhea" },
+        { "id": "cc_dizziness", "name": "Dizziness" },
+        { "id": "cc_fever", "name": "Fever" },
+        { "id": "cc_headache", "name": "Headache" },
+        { "id": "cc_heartburn", "name": "Heartburn" },
+        { "id": "cc_hematemesis", "name": "Hematemesis (Vomiting of blood)" },
+        { "id": "cc_hemoptysis", "name": "Hemoptysis (Blood with sputum)" },
+        { "id": "cc_itching", "name": "Itching/Pruritus" },
+        { "id": "cc_joint_pain", "name": "Joint pain/swelling" },
+        { "id": "cc_lethargy", "name": "Lethargy/Malaise/Fatigue" },
+        { "id": "cc_night_sweats", "name": "Night sweats" },
+        { "id": "cc_palpitation", "name": "Palpitation" },
+        { "id": "cc_skin_rash", "name": "Skin rash" },
+        { "id": "cc_edema", "name": "Swelling of feet/ankle (Edema)" },
+        { "id": "cc_body_swelling", "name": "Swelling on body(Anasarca)" },
+        { "id": "cc_dysphagia", "name": "Swallowing difficulty (Dysphagia)" },
+        { "id": "cc_constipation", "name": "Constipation" },
+        { "id": "cc_abd_bloat", "name": "Abdominal bloating/distension" },
+        { "id": "cc_abd_pain", "name": "Abdominal pain/discomfort" },
+        { "id": "cc_anorexia", "name": "Anorexia (Loss of appetite)" },
+        { "id": "cc_vomiting", "name": "Vomiting" },
+        { "id": "cc_weight_gain", "name": "Weight gain" },
+        { "id": "cc_weight_loss", "name": "Weight loss" }
+    ],
+    // ALL ORIGINAL HISTORY (PRESERVED)
+    "history": [
+        { "id": "hx_dm", "name": "Diabetes Mellitus (DM)" },
+        { "id": "hx_htn", "name": "Hypertension (HTN)" },
+        { "id": "hx_hypotension", "name": "Hypotension" },
+        { "id": "hx_tb", "name": "Tuberculosis (TB)" },
+        { "id": "hx_ihd", "name": "Ischemic Heart Disease (IHD)" },
+        { "id": "hx_copd_asthma", "name": "COPD/Asthma" },
+        { "id": "hx_rheumatic_fever", "name": "Rheumatic Fever" },
+        { "id": "hx_jaundice", "name": "Past Jaundice/Hepatitis" },
+        { "id": "hx_smoking", "name": "Smoking History" },
+        { "id": "hx_dust", "name": "Occupational Dust/Smoke" },
+        { "id": "hx_alcohol", "name": "Alcohol Consumption" },
+        { "id": "hx_family_thalassemia", "name": "Family History of Thalassemia" },
+        { "id": "hx_family_dm_htn", "name": "Family History of DM/HTN" }
+    ],
+    // ALL ORIGINAL GENERAL EXAMINATION (PRESERVED)
+    "general_examination": [
+        { "id": "ge_anemia", "name": "Anemia (Pallor)" },
+        { "id": "ge_jaundice", "name": "Jaundice (Icterus)" },
+        { "id": "ge_cyanosis", "name": "Cyanosis (Bluish)" },
+        { "id": "ge_clubbing", "name": "Clubbing" },
+        { "id": "ge_koilonychia", "name": "Koilonychia (Spoon nails)" },
+        { "id": "ge_leukonychia", "name": "Leukonychia (White nails)" },
+        { "id": "ge_edema", "name": "Edema" },
+        { "id": "ge_dehydration", "name": "Dehydration" },
+        { "id": "ge_lymphadenopathy", "name": "Lymphadenopathy" },
+        { "id": "ge_thyromegaly", "name": "Thyromegaly (Goiter)" },
+        { "id": "ge_pigmentation", "name": "Pigmentation" },
+        { "id": "ge_infection", "name": "Skin Infection" },
+        { "id": "ge_bony_tenderness", "name": "Bony Tenderness" },
+        { "id": "ge_tachycardia", "name": "Tachycardia (High Pulse)" },
+        { "id": "ge_tachypnea", "name": "Tachypnea (High RR)" },
+        { "id": "ge_pyrexia", "name": "Pyrexia (High Fever)" },
+        { "id": "ge_jvp", "name": "Raised JVP" },
+        { "id": "ge_splenomegaly", "name": "Splenomegaly" },
+        { "id": "ge_hepatomegaly", "name": "Hepatomegaly" },
+        { "id": "ge_bladder", "name": "Enlarged bladder" },
+        { "id": "ge_ascites", "name": "Ascites" },
+        { "id": "ge_pleural_rub", "name": "Pleural rub" },
+        { "id": "ge_consolidation", "name": "Consolidation signs" }
+    ],
+    "systems": ["Integrated (All)", "CVS", "Respiratory", "Renal", "Gastroenterology", "Rheumatology", "Hematology", "Hepatobiliary", "Neurology", "Endocrinology", "Dermatology", "Infectious"],
+    
+    // ==================== ALL DISEASES FROM ABM ABDULLAH LONG CASES (60+ DISEASES) ====================
+    "disease_library": [
+        // Respiratory System (Original + Added)
+        { "name": "Bronchial Asthma", "system": "Respiratory", "cc": ["cc_wheezing", "cc_cough", "cc_breathless","cc_chest_tightness"], "ge": ["ge_tachypnea", "ge_tachycardia"], "hx": ["hx_copd_asthma"] },
+        { "name": "Chronic Bronchitis", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sputum","cc_sob","cc_chest_tightness"], "ge": ["ge_cyanosis" ], "hx": ["hx_smoking","hx_dust"] },
+        { "name": "COPD", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sob", "cc_wheezing","cc_sputum"], "ge": ["ge_cyanosis", "ge_jvp", "ge_tachypnea"], "hx": ["hx_smoking", "hx_copd_asthma","hx_dust"] },
+        { "name": "Emphysema", "system": "Respiratory", "cc": ["cc_breathless","cc_chronic_cough","cc_chest_tightness","cc_lethargy","cc_weight_loss"], "ge": [], "hx": ["hx_smoking"] },
+        { "name": "Bronchiectasis", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_sputum", "cc_hemoptysis","cc_chest_pain","cc_lethargy"], "ge": ["ge_clubbing"], "hx": [] },
+        { "name": "Pleural Effusion", "system": "Respiratory", "cc": ["cc_sob", "cc_chest_pain", "cc_cough", "cc_fever"], "ge": [], "hx": ["hx_tb"] },
+        { "name": "Lung Abscess", "system": "Respiratory", "cc": ["cc_chronic_cough", "cc_fever", "cc_lethargy","cc_chest_pain"], "ge": ["ge_clubbing"], "hx": ["hx_alcohol"] },
+        { "name": "Pulmonary Tuberculosis", "system": "Respiratory", "cc": ["cc_cough", "cc_fever", "cc_weight_loss", "cc_night_sweats", "cc_hemoptysis"], "ge": ["ge_anemia", "ge_clubbing"], "hx": ["hx_tb"] },
+        { "name": "Pneumonia (Consolidation)", "system": "Respiratory", "cc": ["cc_fever", "cc_sputum", "cc_cough", "cc_chest_pain","cc_sob"], "ge": ["ge_consolidation", "ge_tachypnea","ge_tachycardia","ge_pyrexia"], "hx": [] },
+        { "name": "Pneumothorax", "system": "Respiratory", "cc": ["cc_breathless", "cc_chest_pain"], "ge": [], "hx": [] },
+        // CVS
+        { "name": "Mitral Stenosis", "system": "CVS", "cc": ["cc_sob","cc_orthopnea","cc_pnd", "cc_palpitation", "cc_hemoptysis"], "ge": ["ge_jvp"], "hx": ["hx_rheumatic_fever"] },
+        { "name": "Mitral Regurgitation", "system": "CVS", "cc": ["cc_sob", "cc_palpitation","cc_lethargy","cc_edema"], "ge": [], "hx": ["hx_ihd"] },
+        { "name": "Aortic Stenosis", "system": "CVS", "cc": ["cc_chest_pain","cc_orthopnea", "cc_blackout", "cc_sob","cc_lethargy"], "ge": [], "hx": ["hx_rheumatic_fever"] },
+        { "name": "Aortic Regurgitation", "system": "CVS", "cc": ["cc_palpitation", "cc_sob","cc_chest_pain","cc_chest_tightness","cc_lethargy"], "ge": [], "hx": ["hx_htn"] },
+        { "name": "Hypertension", "system": "CVS", "cc": ["cc_headache", "cc_dizziness"], "ge": [], "hx": ["hx_htn", "hx_smoking"] },
+        { "name": "Congestive Cardiac Failure", "system": "CVS", "cc": ["cc_breathless","cc_sob", "cc_edema","cc_body_swelling", "cc_lethargy","cc_chest_pain"], "ge": ["ge_edema", "ge_jvp", "ge_tachycardia","ge_tachypnea"], "hx": ["hx_htn", "hx_ihd"] },
+        { "name": "Infective Endocarditis", "system": "CVS", "cc": ["cc_fever", "cc_palpitation", "cc_weight_loss"], "ge": ["ge_clubbing", "ge_splenomegaly"], "hx": ["hx_rheumatic_fever"] },
+        // Renal
+        { "name": "Nephrotic Syndrome", "system": "Renal", "cc": ["cc_edema", "cc_oliguria","cc_sob","cc_urine"], "ge": ["ge_edema","ge_ascites", "ge_leukonychia"], "hx": ["hx_jaundice"] },
+        { "name": "Acute Glomerulonephritis", "system": "Renal", "cc": ["cc_hematuria", "cc_oliguria", "cc_body_swelling"], "ge": ["ge_edema","ge_infection"], "hx": ["hx_htn"] },
+        { "name": "Acute Kidney Injury", "system": "Renal", "cc": ["cc_oliguria", "cc_anuria", "cc_lethargy","cc_anorexia","cc_sob","cc_edema"], "ge": ["ge_tachypnea", "ge_tachycardia", "ge_edema","ge_dehydration"], "hx": [] },
+        { "name": "Chronic Kidney Disease", "system": "Renal", "cc": ["cc_oliguria","cc_itching", "cc_anorexia", "cc_lethargy","cc_weight_loss","cc_vomiting","cc_edema"], "ge": ["ge_anemia", "ge_pigmentation", "ge_edema"], "hx": ["hx_dm", "hx_htn"] },
+        { "name": "Polycystic Kidney Disease", "system": "Renal", "cc": ["cc_hematuria", "cc_abd_pain"], "ge": [], "hx": ["hx_htn"] },
+        // Hepatobiliary
+        { "name": "Cirrhosis of Liver", "system": "Hepatobiliary", "cc": ["cc_abd_bloat", "cc_lethargy","cc_oliguria", "cc_hematemesis"], "ge": ["ge_jaundice", "ge_ascites","ge_hepatomegaly", "ge_splenomegaly", "ge_pigmentation"], "hx": ["hx_alcohol", "hx_jaundice"] },
+        { "name": "Hepatoma", "system": "Hepatobiliary", "cc": ["cc_abd_pain", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_hepatomegaly", "ge_jaundice","ge_splenomegaly"], "hx": ["hx_jaundice"] },
+        { "name": "Liver Abscess", "system": "Hepatobiliary", "cc": ["cc_fever", "cc_abd_pain", "cc_weight_loss"], "ge": ["ge_hepatomegaly","ge_anemia"], "hx": [] },
+        { "name": "Obstructive Jaundice", "system": "Hepatobiliary", "cc": ["cc_itching", "cc_weight_loss","cc_anorexia"], "ge": ["ge_jaundice"], "hx": [] },
+        // Gastroenterology
+        { "name": "Peptic Ulcer Disease", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_heartburn", "cc_hematemesis"], "ge": [], "hx": ["hx_smoking"] },
+        { "name": "Carcinoma Stomach", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_weight_loss", "cc_anorexia","cc_dysphagia","cc_constipation"], "ge": ["ge_anemia"], "hx": [] },
+        { "name": "Inflammatory Bowel Disease", "system": "Gastroenterology", "cc": ["cc_diarrhea","cc_fever", "cc_abd_pain", "cc_weight_loss","cc_fever"], "ge": ["ge_anemia","ge_clubbing"], "hx": [] },
+        { "name": "Carcinoma Colon", "system": "Gastroenterology", "cc": ["cc_abd_pain", "cc_constipation", "cc_weight_loss","cc_anorexia"], "ge": ["ge_ascites"], "hx": [] },
+        // Rheumatology
+        { "name": "Rheumatoid Arthritis", "system": "Rheumatology", "cc": ["cc_joint_pain", "cc_lethargy","cc_fever"], "ge": ["ge_anemia", "ge_clubbing"], "hx": [] },
+        { "name": "Systemic Lupus Erythematosus", "system": "Rheumatology", "cc": ["cc_joint_pain", "cc_skin_rash", "cc_fever"], "ge": ["ge_anemia"], "hx": [] },
+        { "name": "Ankylosing Spondylitis", "system": "Rheumatology", "cc": ["cc_joint_pain"], "ge": [], "hx": [] },
+        // Hematology
+        { "name": "Iron Deficiency Anemia", "system": "Hematology", "cc": ["cc_lethargy", "cc_breathless", "cc_dysphagia"], "ge": ["ge_anemia", "ge_koilonychia"], "hx": [] },
+        { "name": "Thalassemia Major", "system": "Hematology", "cc": ["cc_lethargy", "cc_body_swelling"], "ge": ["ge_anemia", "ge_splenomegaly"], "hx": ["hx_family_thalassemia"] },
+        { "name": "Chronic Myeloid Leukemia", "system": "Hematology", "cc": ["cc_lethargy", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_splenomegaly", "ge_anemia"], "hx": [] },
+        { "name": "Lymphoma", "system": "Hematology", "cc": ["cc_fever", "cc_weight_loss", "cc_night_sweats"], "ge": ["ge_lymphadenopathy", "ge_splenomegaly"], "hx": [] },
+        // Neurology
+        { "name": "Cerebrovascular Accident", "system": "Neurology", "cc": ["cc_blackout", "cc_headache", "cc_dizziness"], "ge": [], "hx": ["hx_htn", "hx_dm"] },
+        { "name": "Parkinson's Disease", "system": "Neurology", "cc": ["cc_dizziness", "cc_lethargy"], "ge": [], "hx": [] },
+        { "name": "Peripheral Neuropathy", "system": "Neurology", "cc": ["cc_lethargy", "cc_dizziness"], "ge": [], "hx": ["hx_dm"] },
+        // Endocrinology
+        { "name": "Hypothyroidism", "system": "Endocrinology", "cc": ["cc_weight_gain", "cc_lethargy", "cc_constipation"], "ge": ["ge_edema"], "hx": [] },
+        { "name": "Thyrotoxicosis", "system": "Endocrinology", "cc": ["cc_weight_loss", "cc_palpitation", "cc_diarrhea"], "ge": ["ge_tachycardia", "ge_thyromegaly"], "hx": [] },
+        { "name": "Diabetes Mellitus", "system": "Endocrinology", "cc": ["cc_polyuria", "cc_weight_loss", "cc_lethargy"], "ge": [], "hx": ["hx_dm"] },
+        { "name": "Cushing's Syndrome", "system": "Endocrinology", "cc": ["cc_weight_gain", "cc_skin_rash"], "ge": [], "hx": [] },
+        // Infectious
+        { "name": "Kala-azar", "system": "Infectious", "cc": ["cc_fever", "cc_weight_loss", "cc_abd_bloat"], "ge": ["ge_splenomegaly", "ge_pigmentation"], "hx": [] },
+        { "name": "Enteric Fever", "system": "Infectious", "cc": ["cc_fever", "cc_headache", "cc_constipation"], "ge": [], "hx": [] }
+    ]
+};
+
+    let selectedChiefs = new Set();
+    let selectedSigns = new Set();
+    let selectedPast = new Set();
+    let gpe = { appearance: "", decubitus: "" };
+    let selectedSystem = "Integrated (All)";
+
+    function renderToggleButtons(id, list, set) {
+        const container = document.getElementById(id); 
+        if(!container) return;
+        container.innerHTML = "";
+        list.forEach(item => {
+            const btn = document.createElement("button"); 
+            btn.textContent = item.name;
+            btn.className = "choice-btn" + (set.has(item.id) ? " active" : "");
+            btn.onclick = () => { 
+                if(set.has(item.id)) set.delete(item.id); 
+                else set.add(item.id); 
+                renderToggleButtons(id, list, set); 
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function renderRadioGroup(id, options, key) {
+        const container = document.getElementById(id);
+        if(!container) return;
+        container.innerHTML = "";
+        options.forEach(opt => {
+            const span = document.createElement("span"); 
+            span.textContent = opt;
+            span.className = "radio-opt" + (gpe[key] === opt ? " selected" : "");
+            span.onclick = () => { gpe[key] = opt; renderRadioGroup(id, options, key); };
+            container.appendChild(span);
+        });
+    }
+
+    function renderSystemButtons() {
+        const container = document.getElementById("system-focus-buttons");
+        if(!container) return;
+        container.innerHTML = "";
+        medicalData.systems.forEach(opt => {
+            const btn = document.createElement("button"); 
+            btn.textContent = opt;
+            btn.className = "choice-btn" + (selectedSystem === opt ? " active" : "");
+            btn.onclick = () => { selectedSystem = opt; renderSystemButtons(); };
+            container.appendChild(btn);
+        });
+    }
+
+    function generateDiagnosis() {
+        const resultsDiv = document.getElementById("results-area");
+        let matches = [];
+        const chiefs = Array.from(selectedChiefs);
+        const signs = Array.from(selectedSigns);
+        const pasts = Array.from(selectedPast);
+
+        medicalData.disease_library.forEach(d => {
+            if (selectedSystem === "Integrated (All)" || d.system === selectedSystem) {
+                let score = 0;
+                let matched = [];
+                
+                d.cc.forEach(id => { if(chiefs.includes(id)) { score += 3; let m = medicalData.chief_complaints.find(x=>x.id===id); if(m) matched.push(m.name); } });
+                d.ge.forEach(id => { if(signs.includes(id)) { score += 2; let m = medicalData.general_examination.find(x=>x.id===id); if(m) matched.push(m.name); } });
+                d.hx.forEach(id => { if(pasts.includes(id)) { score += 1.5; let m = medicalData.history.find(x=>x.id===id); if(m) matched.push(m.name); } });
+
+                if(score > 0) matches.push({...d, score, matched});
+            }
+        });
+
+        resultsDiv.innerHTML = "<h3>Scored Differentials (Highest Match First):</h3>";
+        if(matches.length === 0) resultsDiv.innerHTML += "<p>Add more features to see results.</p>";
+        else {
+            matches.sort((a,b)=>b.score-a.score).forEach(m => {
+                resultsDiv.innerHTML += `
+                <div class="dx-card">
+                    <span class="score-badge">Match: ${m.score}</span>
+                    <span class="system-tag">${m.system}</span>
+                    <div class="dx-title">${m.name}</div>
+                    <div class="dx-reason">Evidence: ${m.matched.join(", ")}</div>
+                </div>`;
+            });
+        }
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function renderLibrary() {
+        const lib = document.getElementById("disease-library");
+        if(!lib) return;
+        lib.innerHTML = "";
+        medicalData.systems.slice(1).forEach(sys => {
+            const sysGroup = medicalData.disease_library.filter(d => d.system === sys);
+            if(sysGroup.length > 0) {
+                const head = document.createElement("div"); head.className = "group-label"; head.textContent = sys;
+                lib.appendChild(head);
+                sysGroup.forEach(d => {
+                    const card = document.createElement("div"); card.className = "disease-ref-card";
+                    const markers = d.cc.map(id => medicalData.chief_complaints.find(cc => cc.id === id)?.name).filter(n => n).join(", ");
+                    card.innerHTML = `<div class="disease-name">${d.name}</div><div class="disease-details"><b>Key Markers:</b> ${markers || "See textbook for details"}</div>`;
+                    lib.appendChild(card);
+                });
+            }
+        });
+    }
+
+    window.onload = () => {
+        renderToggleButtons("chief-buttons", medicalData.chief_complaints, selectedChiefs);
+        renderToggleButtons("systemic-signs", medicalData.general_examination, selectedSigns);
+        renderToggleButtons("past-buttons", medicalData.history, selectedPast);
+        renderRadioGroup("appearance-radios", ["Ill looking", "Normal", "Anemic", "Cushingoid", "Myxedematous"], "appearance");
+        renderRadioGroup("decubitus-radios", ["Comfortable", "Orthopnea", "Propped up"], "decubitus");
+        renderSystemButtons();
+        renderLibrary();
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = () => {
+                document.querySelectorAll('.tab, .panel').forEach(el => el.classList.remove('active', 'active-panel'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-panel').classList.add('active-panel');
+            };
+        });
+        document.getElementById("diagnoseBtn").onclick = generateDiagnosis;
+        document.getElementById("resetAllBtn").onclick = () => location.reload();
+
+        // ---- QUESTIONS SECTION ----
+        renderQuestionsTypes();
+    };
+
+    // ==================== QUESTIONS DATA FROM ABM ABDULLAH (Pages 26-56) ====================
+    const questionsData = {
+        "proceed_long_case": {
+            label: "📋 Proceed to Long Case",
+            subtypes: {
+                "Chief Complaints": {
+                    icon: "🗣️",
+                    questions: [
+                        "Ask: 'Would you please tell me what's wrong with you?' Or 'Why are you admitted in the hospital?' Or 'What are your presenting problems?'",
+                        "Try to elicit the main complaints with their time frame.",
+                        "Precise chronology and sequence of events are very important.",
+                        "Note the symptom of longest duration first, then others in decreasing order — ending with shortest duration (e.g., fever 6 months, headache 3 months, weakness 1 month)."
+                    ]
+                },
+                "History of Present Illness (HPI)": {
+                    icon: "📝",
+                    questions: [
+                        "Onset — How did it start? When did it start?",
+                        "Duration — How long have you been suffering?",
+                        "Progression — Is it progressive or static?",
+                        "Aggravating factors — What makes it worse?",
+                        "Relieving factors — What makes you feel better?",
+                        "Anything else — Do you have anything else to mention?",
+                        "Ask about important negative history if relevant.",
+                        "Are you suffering from diabetes mellitus, hypertension, bronchial asthma or other chronic illness?"
+                    ]
+                },
+                "History of Past Illness": {
+                    icon: "📜",
+                    questions: [
+                        "Any previous diseases — duration, treatment taken, hospitalization?",
+                        "History of any operation, injury, trauma or procedures (catheterization, endoscopy, colonoscopy, biopsy)?",
+                        "History of any investigations done?",
+                        "History of diabetes mellitus, hypertension or other chronic illness?",
+                        "Childhood illnesses, birth complications, immunization history, developmental milestones?"
+                    ]
+                },
+                "Family History": {
+                    icon: "👨‍👩‍👧",
+                    questions: [
+                        "Number of family members (parents, spouse, children)?",
+                        "Their state of health — 'Are they in good health?' 'Do they have any illness?' (TB, hypertension, DM, dyslipidemia, IHD, thyroid disorder, bronchial asthma, etc.)",
+                        "If any death among family members — enquire the cause of death.",
+                        "Any hereditary conditions (e.g. thalassemia)? Any consanguinity (marriage among relatives)?",
+                        "If X-linked disease suspected — ask specifically about health of maternal uncles."
+                    ]
+                },
+                "Personal History": {
+                    icon: "👤",
+                    questions: [
+                        "Occupation — exact nature of work?",
+                        "Marital status?",
+                        "Dietary habit?",
+                        "Hobby, pet keeping (cows, dog, rabbit, pigeon), any games or entertainment?",
+                        "Tea or coffee? Betel nut consumption?",
+                        "Smoking — number of sticks daily with duration? Ex-smoker — when stopped, how many sticks? Passive smoking?",
+                        "Alcohol — how much and how long? Daily, weekly or occasional? Home or outside?",
+                        "Drug abuse including IV drug use, sharing needles? Any dependency?",
+                        "Sexual exposure or sexual practice including homosexuality, polygamy?"
+                    ]
+                },
+                "Socioeconomic History": {
+                    icon: "🏠",
+                    questions: [
+                        "Nature of home — apartment, slum area, wooden house? Living status, overcrowding?",
+                        "Water supply and sanitation?",
+                        "Office environment?",
+                        "Income and employment?",
+                        "Social and family relationship?",
+                        "Any dependents at home? Who else lives there?",
+                        "Who visits the house? (relatives, neighbors, friends)"
+                    ]
+                },
+                "Drug & Treatment History": {
+                    icon: "💊",
+                    questions: [
+                        "Details of drugs — previous and present?",
+                        "History of drug allergy, drug intolerance or any reaction?",
+                        "Treatment already received for the present illness?",
+                        "History of any transfusion — blood, plasma, blood product, normal saline or other fluid?"
+                    ]
+                },
+                "Immunization, Travel & Other History": {
+                    icon: "✈️",
+                    questions: [
+                        "History of immunization — hepatitis B, tuberculosis, tetanus?",
+                        "Travel or job outside the country? (useful for malaria, amebiasis, hepatitis B, HIV)",
+                        "Any symptoms related to anxiety, depression, dementia, hallucination, delusion, phobia, sleep pattern? (Psychiatric history)",
+                        "In female — Period (menstrual history: amenorrhea, polymenorrhea, menorrhagia)?",
+                        "In female — Pill (oral contraceptive pill or other contraceptive method)?",
+                        "In female — Pregnancy (obstetric history: number of children, age of last child, PPH, abortion)?"
+                    ]
+                }
+            }
+        },
+        "systemic_inquiry": {
+            label: "🔍 Systemic Inquiry",
+            subtypes: {
+                "General Symptoms": {
+                    icon: "🌡️",
+                    questions: [
+                        "Do you suffer from fever? If yes, ask details.",
+                        "Do you have night sweats?",
+                        "Have you gained or lost weight? If yes, ask details.",
+                        "Have you noticed any swelling on your body?",
+                        "Do you feel unusually weak, lethargic, malaise or fatigue?",
+                        "Do you feel excessive sweating or cold?",
+                        "Have you noticed any change in your complexion (pale, darkening, yellowish)?",
+                        "How is your sleep? Any change in sleep pattern, difficulty falling asleep, early awakening or daytime sleepiness?",
+                        "Do you have any skin rash or itching?"
+                    ]
+                },
+                "Cardiovascular System": {
+                    icon: "❤️",
+                    questions: [
+                        "Do you have chest pain, discomfort or tightness in chest?",
+                        "Do you have difficulty in breathing?",
+                        "Do you have cough?",
+                        "Did you notice any swelling of your feet or ankle? (edema)",
+                        "Do you feel palpitation or irregular heartbeats? Do you sometimes miss a beat? Feel dizzy? Had blackout?",
+                        "Do you feel pain in legs or arms during exercise or work? (intermittent claudication)",
+                        "Do your hands or feet become blue or cold?"
+                    ]
+                },
+                "Respiratory System": {
+                    icon: "🫁",
+                    questions: [
+                        "Do you suffer or ever suffered from difficulty in breathing?",
+                        "Do you have cough?",
+                        "Did you notice blood with your sputum?",
+                        "Do you feel any chest pain?",
+                        "Have you noticed any wheezing?",
+                        "Do you snore? Or did anyone complain that you snore during sleep?"
+                    ]
+                },
+                "Alimentary & Hepatobiliary System": {
+                    icon: "🫀",
+                    questions: [
+                        "Do you have heartburn?",
+                        "Do you have pain or discomfort in your abdomen?",
+                        "Do you feel abdominal bloating or distension?",
+                        "How is your appetite? Any loss or increase in appetite?",
+                        "Do you feel nausea or vomiting?",
+                        "Do you feel difficulty in swallowing?",
+                        "Do you have diarrhea or constipation? Duration, frequency, amount, aggravating factors?",
+                        "Is there any recent change in bowel habit?",
+                        "Have you seen blood or mucus in stool?",
+                        "Did you notice black tarry stool? (melena)",
+                        "Do you have pale stool with itching and dark urine? (obstructive jaundice)",
+                        "Do you have any mouth ulcer?"
+                    ]
+                },
+                "Genitourinary System": {
+                    icon: "🩺",
+                    questions: [
+                        "Do you have frequency of micturition?",
+                        "Are you passing larger amount of urine? (polyuria)",
+                        "Do you get up at night to pass urine? (nocturia)",
+                        "Do you feel pain during passing urine? (dysuria)",
+                        "If your bladder is full, do you have to void immediately? (urgency)",
+                        "Do you notice narrow stream while passing urine? (poor stream)",
+                        "Does the flow stop on straining for micturition?",
+                        "Do you notice difficulty in starting micturition? (hesitancy)",
+                        "Is there any dribbling at the end of micturition? (terminal dribbling)",
+                        "Do you have incontinence of urine?",
+                        "What is the color of your urine? Is it mixed with blood? (hematuria)",
+                        "Do you have any loin pain? Does it go from loin to groin?",
+                        "Have you any problem with your sex life?",
+                        "Did you notice any ulcer, rash or lumps on your genitals?",
+                        "In female: Do you have any discharge from vagina or urethra?"
+                    ]
+                },
+                "Nervous System": {
+                    icon: "🧠",
+                    questions: [
+                        "Do you suffer from headache?",
+                        "Did you suffer from convulsion, fainting episodes, fits, blackout, vertigo or dizziness?",
+                        "Do you have problems with memory or concentration?",
+                        "Do you have trouble with your vision, hearing, taste or smell? Do you feel tinnitus?",
+                        "Do you have weakness (hemiplegia, paraplegia or monoplegia), tingling, numbness (pins and needles) or clumsiness in arms or legs?",
+                        "Do you have tremor or any involuntary movement in any part of your body?",
+                        "Did you notice any problem with your balance?",
+                        "Did you ever have any head injury?"
+                    ]
+                },
+                "Locomotor System": {
+                    icon: "🦴",
+                    questions: [
+                        "Do you have painful or stiff joints or swelling of joints?",
+                        "Do you have backache or pain in the neck or muscular pain?",
+                        "Do you feel weak or have difficulty in standing up from sitting position or difficulty in raising hands above your head?",
+                        "Have you noticed any skin rash? (dermatomyositis)",
+                        "Have you ever had a dry mouth or mouth ulcer?",
+                        "Have your eyes been dry or red?"
+                    ]
+                },
+                "Endocrine System": {
+                    icon: "⚗️",
+                    questions: [
+                        "Are you suffering from diabetes mellitus or do you have any thyroid problem?",
+                        "Have you noticed any neck swelling?",
+                        "Do you prefer hot or cold weather? Do you have excessive sweating? (cold intolerance → hypothyroidism; heat intolerance + sweating → hyperthyroidism)",
+                        "Do you have tremor in your hands?",
+                        "Do you feel weak or fatigue?",
+                        "How is your appetite? (excessive → DM/thyrotoxicosis; loss → malignancy/CKD/CLD/TB/hypothyroidism)",
+                        "Have you lost or gained weight?",
+                        "Is there any change in your appearance, hair, skin or voice?",
+                        "Do you feel unusually thirsty? (DM, diabetes insipidus, hypercalcemia)"
+                    ]
+                },
+                "Hematological System": {
+                    icon: "🩸",
+                    questions: [
+                        "Do you have bleeding from anywhere or bruise easily?",
+                        "Have you noticed prolonged bleeding after a small cut?",
+                        "Have you noticed any lump under your armpit, in your neck or groin? (lymph nodes)",
+                        "Have you ever had blood clots in your legs or other parts of the body? (DVT)",
+                        "Do you feel extreme weakness, dizziness, lassitude, dyspnea, palpitation? (anemia)",
+                        "Are you taking any drugs? Have you been exposed to chemicals or radiation? (aplastic anemia)"
+                    ]
+                },
+                "Reproductive System (Female)": {
+                    icon: "👩",
+                    questions: [
+                        "Did you have any miscarriage or abortion?",
+                        "During past pregnancy, did you suffer from high blood pressure or diabetes mellitus?",
+                        "In previous delivery, did you suffer from prolonged bleeding?",
+                        "Do you feel any lump in your breast? How long? Getting larger? Painful or painless? Any discharge, itching or skin change?"
+                    ]
+                }
+            }
+        },
+        "elaboration_symptoms": {
+            label: "🔬 Elaboration of Symptoms",
+            subtypes: {
+                "Fever": {
+                    icon: "🌡️",
+                    questions: [
+                        "How long have you been suffering from fever?",
+                        "When does it start (morning, evening, night)? How long does it persist (few hours or throughout the day)?",
+                        "Is there any evening rise of temperature associated with night sweats?",
+                        "What was the highest recorded temperature?",
+                        "Is it associated with chills and rigors? Does it subside with sweating?",
+                        "Does it subside spontaneously or with antipyretic?",
+                        "Is the fever punctuated by apyrexial period? (Undulant / Pel-Ebstein)",
+                        "Is the fever associated with skin rash or purpura?",
+                        "Any associated symptoms? (urinary complaint, cough, chest pain, abdominal pain, headache, loss of consciousness, weight loss, polyarthritis)",
+                        "Any history of sexual exposure, homosexuality, travel abroad?",
+                        "Are you taking any drugs? (drug fever)"
+                    ],
+                    causes: [
+                        "Low grade fever with evening rise → Tuberculosis",
+                        "Fever with chill and rigor → Acute pyelonephritis, acute cholangitis, SBE, subphrenic abscess, pyogenic lung abscess, septicemia, lobar pneumonia, pyrogenic reaction",
+                        "Fever with chill and rigor subsiding with sweating → Malaria",
+                        "Fever with unconsciousness → Cerebral malaria, meningitis, encephalitis, pontine hemorrhage",
+                        "Fever with neck rigidity → Meningitis, encephalitis",
+                        "Fever with drenching night sweat → Lymphoma, tuberculosis",
+                        "Feeling feverish with excessive sweating → Thyrotoxicosis",
+                        "Pel-Ebstein (undulant) fever → Hodgkin's lymphoma",
+                        "Fever with double/triple rise → Kala-azar",
+                        "Step ladder pattern → Enteric fever",
+                        "Relapsing fever → Malaria, borreliosis, occasionally lymphoma",
+                        "Fever with myalgia → Viral infection (influenza, dengue)",
+                        "Rash day 1 → Varicella; day 2 → Scarlet fever; day 3 → Pox; day 4 → Measles/Rubella; day 5 → Typhus; day 6 → Dengue; day 7 → Enteric fever (rose spot)",
+                        "Hectic fever (sudden high temp with chill/rigor, falls with sweating) → Lung abscess, pyogenic liver abscess, empyema, subphrenic abscess, septicemia",
+                        "Fever with relative bradycardia → Viral fever, 1st week enteric fever, brucellosis, psittacosis, Weil's disease",
+                        "Fever with relative tachycardia → Acute rheumatic carditis, diphtheric myocarditis, severe TB, polyarteritis nodosa",
+                        "Hyperpyrexia + rigidity on antipsychotics → Neuroleptic malignant syndrome",
+                        "Aseptic fever (no infection) → SLE, lymphoma, leukemia, drug fever, AMI, heat stroke, thyrotoxic crisis, acute gout"
+                    ]
+                },
+                "Abdominal Pain": {
+                    icon: "🫃",
+                    questions: [
+                        "Site: What is the site of pain?",
+                        "Onset: Is it sudden or chronic? Does it disturb sleep at late night?",
+                        "Character: What is the character of pain? (dull ache, colicky, stabbing, burning)",
+                        "Radiation: Does it radiate to any site? (back → pancreatitis; loin to groin → renal colic; right shoulder → cholecystitis)",
+                        "Association: Is it associated with diarrhea, vomiting, dyspepsia, altered bowel habit, urinary complaints, distension?",
+                        "Timing and duration: How long? When does it start and go? Has it changed since beginning?",
+                        "Exacerbating factors: What brings it on? What makes it worse? Is it related to meal?",
+                        "Relieving factors: What makes it better?",
+                        "Severity: How severe is it?"
+                    ],
+                    causes: [
+                        "Epigastric pain → Peptic ulcer, acute pancreatitis, GERD, cholecystitis (also referred AMI, basal pneumonia)",
+                        "Right iliac fossa pain → Acute appendicitis, Crohn's disease, salpingitis",
+                        "Pain shifts from mid-abdomen to RIF → Acute appendicitis",
+                        "Left iliac fossa pain → Diverticulitis, volvulus, salpingitis, IBS",
+                        "Right hypochondriac pain → Acute cholecystitis, liver abscess, acute viral hepatitis, CCF, subphrenic abscess",
+                        "Right hypochondriac colicky pain + jaundice → Gallstone in common bile duct",
+                        "Loin pain → Renal colic, acute pyelonephritis, perinephric abscess",
+                        "Generalized pain → Peritonitis, IBD, gastroenteritis",
+                        "Acute pain → Acute cholecystitis, appendicitis, pancreatitis, intestinal obstruction, perforation",
+                        "Chronic pain → Peptic ulcer disease, IBS (PUD may cause late night pain)",
+                        "Burning pain → Peptic ulcer disease",
+                        "Colicky pain → Intestinal obstruction, ureteric stone, stone in CBD, ascariasis",
+                        "Pain aggravated by smoking, alcohol, NSAIDs, relieved by antacids → PUD (duodenal: worse on empty stomach, relieved by food; gastric: worse after food)",
+                        "Pain aggravated by heavy meal and alcohol, partially improved by bending forward → Acute pancreatitis",
+                        "Pain aggravated by fatty food → Cholelithiasis",
+                        "Pain aggravated by eating → Ischemic gut",
+                        "Pain aggravated by movement → Peritonitis",
+                        "Pain relieved by vomiting → Gastric outlet obstruction",
+                        "Pain radiating to back → Acute pancreatitis, penetrating peptic ulcer",
+                        "Pain radiating loin to groin → Renal colic",
+                        "Pain referred to right shoulder → Acute cholecystitis, diaphragmatic pleurisy",
+                        "Pain referred to left shoulder → Splenic infarction, perisplenitis"
+                    ]
+                },
+                "Chest Pain": {
+                    icon: "💔",
+                    questions: [
+                        "Site: Where is your pain? (central or peripheral part of the chest)",
+                        "Onset: How did the pain start? (sudden or gradual)",
+                        "Character: What is the nature of pain? (compressive, sharp, tearing, stabbing, crushing)",
+                        "Radiation: Does the pain radiate to any site? (left arm, neck, jaw → IHD; between shoulder blades → dissecting aneurysm)",
+                        "Timing (duration): How long does it persist? (<30 min → angina; >30 min → MI)",
+                        "Exacerbating factors: What causes the pain? What makes it worse? (exertion, emotion, eating, lying flat, breathing)",
+                        "Relieving factor: How is the pain relieved? (rest/GTN → angina; leaning forward → pericarditis/pancreatitis)"
+                    ],
+                    causes: [
+                        "Central/retrosternal pain → AMI, angina, pericarditis, myocarditis, dissecting aorta, spontaneous pneumothorax, PE, reflux esophagitis, Mallory-Weiss, mediastinitis, tracheitis",
+                        "Peripheral chest pain → Pleurisy, pneumonia, pneumothorax, pulmonary infarction, rib/chest wall (fracture, secondaries), costochondritis, herpes zoster, Bornholm disease",
+                        "Pain radiating to inner left arm, neck, jaw → IHD",
+                        "Compressing/crushing/squeezing/stabbing → Acute myocardial infarction",
+                        "Sharp stabbing pain → Pleurisy or pericarditis",
+                        "Burning pain → GERD",
+                        "Very severe tearing pain (sudden onset, radiates to back) → Dissecting aortic aneurysm",
+                        "Sudden onset → AMI, spontaneous pneumothorax, pulmonary embolism",
+                        "Nocturnal chest pain → Heart failure, coronary artery spasm",
+                        "Pain <30 minutes → Angina pectoris",
+                        "Pain >30 minutes → Acute myocardial infarction",
+                        "Long duration (weeks/months) → Musculoskeletal, GIT disorder, cancer",
+                        "Pain on exertion/eating/emotion (3E), relieved by rest/GTN → Angina pectoris",
+                        "Pain after eating, lying flat, hot drinks, alcohol → Esophageal spasm or GERD",
+                        "Unilateral sharp pain aggravated by deep breathing/cough/posture → Pleuritic chest pain",
+                        "Pain relieved by food → Duodenal ulcer",
+                        "Pain relieved by sitting up and leaning forward → Pericarditis",
+                        "Pain with breathlessness → IHD, PE, pleurisy, anxiety",
+                        "Pain with nausea/vomiting/sweating → Acute MI",
+                        "Pain with difficulty swallowing → Esophagitis, esophageal carcinoma",
+                        "Sudden sharp chest pain + severe dyspnea → Spontaneous pneumothorax",
+                        "Retrosternal pain + repeated coughing → Tracheobronchitis"
+                    ]
+                },
+                "Cough": {
+                    icon: "😮‍💨",
+                    questions: [
+                        "How long have you been suffering from cough?",
+                        "Is it paroxysmal or persistent?",
+                        "Is it dry or productive?",
+                        "If productive: amount, color, odor, time of production (morning), presence of blood, relation to posture change?",
+                        "Is it associated with hemoptysis? Fresh or altered blood?",
+                        "Is it associated with chest pain or dyspnea?",
+                        "Is the cough aggravated by dust, cold air, smoke or pollen?",
+                        "Does it occur after eating or drinking?",
+                        "When does the cough get worse? (day or night)",
+                        "What is the character of cough? (croupy, barking, brassy, bovine, whooping)",
+                        "Are you taking any drugs? (such as ACE inhibitor)"
+                    ],
+                    causes: [
+                        "Recent/acute onset → Respiratory infection, pneumonia, acute bronchitis",
+                        "Chronic cough → COPD, bronchial asthma, bronchiectasis, ILD, tuberculosis",
+                        "Occasional/paroxysmal → Bronchial asthma",
+                        "Dry cough → ACE inhibitor (captopril/lisinopril), cough variant asthma, ILD, acute tracheobronchitis, tropical eosinophilia",
+                        "Nocturnal cough → Bronchial asthma, LVF, tropical eosinophilia, post-nasal drip, aspiration",
+                        "Cough with postural variation → Bronchiectasis, lung abscess, GERD",
+                        "Painful cough / retrosternal pain → Tracheitis",
+                        "Cough after eating/drinking → Esophageal reflux, TE fistula",
+                        "Croupy cough → Laryngitis (in children exclude diphtheria)",
+                        "Harsh, barking, painful + stridor → Laryngeal disorder (laryngitis, tumor)",
+                        "Barking cough → Acute epiglottitis",
+                        "Loud, brassy cough → Pressure on trachea by tumor",
+                        "Hollow, bovine cough → Recurrent laryngeal nerve palsy (bronchial carcinoma)",
+                        "Associated with whoop → Whooping cough",
+                        "Cough with wheeze → Bronchial asthma, COPD",
+                        "Profuse expectoration → Bronchiectasis, lung abscess, resolution stage of pneumonia",
+                        "Yellowish/greenish/purulent sputum → Bronchiectasis, resolution of pneumonia",
+                        "Foul smelling dark sputum → Lung abscess (anaerobic infection)",
+                        "Rusty sputum → Pneumococcal pneumonia",
+                        "Frothy sputum → Pulmonary edema",
+                        "Hemoptysis: Respiratory → Bronchial carcinoma, TB, pulmonary infarction, bronchiectasis; Cardiac → Mitral stenosis; Blood dyscrasias → Hemophilia, DIC, anticoagulants"
+                    ]
+                },
+                "Dyspnea (Breathlessness)": {
+                    icon: "💨",
+                    questions: [
+                        "Is the onset sudden (acute) or gradual (chronic)?",
+                        "Does it occur with exertion or at rest?",
+                        "If exertional: how much activity causes breathlessness? (mild/moderate/severe — ask about walking distance, stair climbing, undressing)",
+                        "Do you have diseases such as rhinitis, asthma, heart disease, renal disorder?",
+                        "Do you get breathless at night waking you from sleep? (PND) How do you feel better?",
+                        "Do you feel breathless on lying flat? (orthopnea) How many pillows do you use?",
+                        "Is it paroxysmal or progressive?",
+                        "Is there any seasonal variation?",
+                        "Any history of recent travel abroad by air?",
+                        "Do you smoke? If yes, number of sticks per day.",
+                        "Any aggravating factor or occupational exposure to coal dust, silica, asbestos, animal dander?",
+                        "Any relieving factor? (drugs, rest, change of posture, after expectoration)",
+                        "Is it associated with other symptoms? (cough, chest pain, wheeze, hemoptysis)"
+                    ],
+                    causes: [
+                        "Acute/sudden dyspnea → Acute severe asthma, acute LVF, acute COPD exacerbation, spontaneous pneumothorax, PE, ARDS, cardiac tamponade, acute laryngeal obstruction, DKA, conversion disorder",
+                        "Chronic dyspnea → Chronic bronchial asthma, COPD, DPLD",
+                        "Dyspnea on mild exertion → COPD, LVF",
+                        "Orthopnea or PND → Pulmonary edema (LVF, mitral stenosis)",
+                        "Dyspnea at rest → Acute severe asthma, massive pneumothorax, ARDS, acute laryngeal edema, ILD (advanced), massive PE, acute LVF, metabolic acidosis (DKA, lactic acidosis, salicylate poisoning, acute renal failure)",
+                        "Progressively increasing dyspnea → DPLD",
+                        "Dyspnea with seasonal variation → Bronchial asthma, chronic bronchitis",
+                        "Dyspnea after air travel/immobilization → PE from DVT",
+                        "Dyspnea aggravated by coal dust/silica/asbestos/animal dander → Occupational asthma",
+                        "Dyspnea with wheezing → Acute severe asthma, COPD, sometimes acute LVF, anaphylaxis",
+                        "Dyspnea with stridor (upper airway obstruction) → Foreign body/tumor, acute epiglottitis, anaphylaxis, laryngeal trauma",
+                        "Dyspnea with crepitations → Acute LVF (pulmonary edema), bilateral extensive bronchiectasis",
+                        "Dyspnea but chest is clear → PE, metabolic acidosis (DKA, renal failure), severe anemia, shock, PCP, psychogenic",
+                        "Dyspnea with unilateral chest pain → Spontaneous pneumothorax",
+                        "Dyspnea with shock → Acute myocardial infarction",
+                        "Dyspnea with high fever → Pneumonia",
+                        "Psychogenic dyspnea → 'Inability to take a breath big enough to fill lungs'; breathing deep and punctuated with sighs"
+                    ]
+                },
+                "Vomiting": {
+                    icon: "🤢",
+                    questions: [
+                        "How long have you been suffering from vomiting?",
+                        "How many times do you vomit a day?",
+                        "What are the contents of the vomitus?",
+                        "Does it contain blood (hematemesis)?",
+                        "What is the color of vomitus? (coffee ground → gastric bleeding; bile-stained green → distal pylorus obstruction)",
+                        "Is it associated with nausea?",
+                        "Does it occur in the morning only?",
+                        "Do you induce vomiting?",
+                        "Is the vomiting projectile in nature? (→ gastric outlet obstruction, raised ICP)",
+                        "Does vomiting relieve abdominal pain or discomfort?",
+                        "Is there any relation to food?",
+                        "Any history of head injury?",
+                        "Are you taking any drugs? Did you take radiation therapy?",
+                        "In female: ask about amenorrhea.",
+                        "Is it associated with chest pain, headache, tinnitus, vertigo, fever, jaundice, diarrhea, weight loss?"
+                    ],
+                    causes: [
+                        "Food of previous day (not bile-stained) → Pyloric stenosis",
+                        "Bile-stained contents → Obstruction distal to pylorus",
+                        "Fecal vomiting → Distal small bowel obstruction, colonic obstruction, gastrocolic fistula",
+                        "Blood in vomitus → Bleeding gastric ulcer, gastric erosion, carcinoma stomach, ruptured esophageal varices",
+                        "Coffee ground vomitus → Gastric bleeding (hemoglobin → acid hematin)",
+                        "Early morning vomiting (before eating) → Raised ICP, pregnancy, alcoholism",
+                        "Vomiting 1 hour after food → Gastric outlet obstruction",
+                        "Vomiting immediately after eating → Psychogenic, peptic ulcer with pyloric spasm",
+                        "Vomiting without nausea → Raised ICP",
+                        "Projectile vomiting → Gastric outlet obstruction",
+                        "Induced vomiting → Gastric outlet obstruction, bulimia nervosa",
+                        "Pain abdomen relieved by vomiting → Gastric outlet obstruction, gastric ulcer",
+                        "Vomiting + severe abdominal pain + absolute constipation → Intestinal obstruction",
+                        "Acute vomiting + diarrhea + fever → Infective gastroenteritis",
+                        "Vomiting with severe abdominal pain → Renal or biliary colic",
+                        "Vomiting with jaundice → Acute viral hepatitis",
+                        "Vomiting with chest pain → Acute MI",
+                        "Vomiting with unilateral headache → Migraine, cluster headache",
+                        "Vomiting with tinnitus/vertigo → Vestibular involvement",
+                        "Prolonged vomiting with little/no weight loss → Psychogenic",
+                        "Non-GI causes (mnemonic ABCDEFGHIP): Acute renal failure/Addison's, Brain disease (raised ICP)/Brainstem, Cardiac (AMI), DKA, Ear disease, Foreign substance (alcohol/drugs), Gravidity, Hypercalcemia, Infection (meningitis/encephalitis), Psychogenic"
+                    ]
+                },
+                "Palpitation": {
+                    icon: "💓",
+                    questions: [
+                        "What do you really feel? (unexpected awareness of heartbeat)",
+                        "Did you check your pulse by yourself?",
+                        "How does it start? (spontaneous or with activity, anxiety, emotion)",
+                        "Is it paroxysmal or persistent?",
+                        "How long does it persist?",
+                        "How is it relieved?",
+                        "Have you ever missed a heartbeat?",
+                        "Do you get breathlessness, chest pain, dizziness or blackout with palpitation?"
+                    ],
+                    causes: [
+                        "Sudden onset and termination of rapid regular palpitation → Paroxysmal SVT, atrial flutter with 2:1 block",
+                        "Persistent palpitation → Anxiety neurosis, thyrotoxicosis, pregnancy",
+                        "Missed beat followed by a heavy beat → Premature atrial or ventricular contractions",
+                        "Rapid palpitation followed by syncope → Ventricular tachycardia",
+                        "Rapid irregular palpitation → Atrial fibrillation or flutter with variable block",
+                        "Rapid regular palpitation → Paroxysmal SVT",
+                        "Slow palpitation → Beta blocker, pulsus bigeminus",
+                        "Other causes → Heart failure, ventricular tachycardia, AF, atrial flutter"
+                    ]
+                },
+                "Jaundice": {
+                    icon: "🟡",
+                    questions: [
+                        "Did it start with anorexia, nausea and vomiting? (→ acute viral hepatitis)",
+                        "Any history of contact with jaundiced patient or sexual exposure?",
+                        "What is the color of the stool? (yellowish, pale, dark)",
+                        "Do you have itching? (→ obstructive jaundice)",
+                        "Did you ever take any injection, infusion or blood transfusion? (HBV/HCV)",
+                        "Any history of IV drug abuse, tattooing or surgery?",
+                        "Do you take alcohol or any drugs? (hepatotoxic drugs)",
+                        "Any family history of jaundice? Any consanguinity?",
+                        "Did you suffer from recurrent jaundice?",
+                        "Any associated history of high fever or urinary complaints?",
+                        "Previous history of jaundice associated with neurological abnormality? (Wilson's disease)",
+                        "Have you traveled abroad?"
+                    ],
+                    causes: [
+                        "Anorexia, nausea, vomiting → Acute viral hepatitis (also drug-induced hepatitis)",
+                        "Itching + pale/dark stool → Obstructive jaundice",
+                        "Long-standing jaundice + itching + skin pigmentation → Primary biliary cirrhosis",
+                        "History of injection/transfusion/IV drug abuse/tattooing/homosexuality → HBV or HCV",
+                        "Family history of jaundice + consanguinity + pallor → Hereditary hemolytic anemia",
+                        "Persistent mild jaundice → Gilbert's syndrome",
+                        "Jaundice + high fever + urinary complaint → Leptospirosis",
+                        "Recurrent jaundice + neurological abnormality → Wilson's disease",
+                        "Jaundice with pregnancy → Cholestatic jaundice of pregnancy",
+                        "Painless progressive jaundice + palpable gallbladder → Carcinoma head of pancreas",
+                        "Abdominal pain + fluctuating jaundice → Bile duct stone or stricture, pancreatitis"
+                    ]
+                },
+                "Headache": {
+                    icon: "🤕",
+                    questions: [
+                        "What is the site of headache? (unilateral or diffuse, frontal, occipital or facial)",
+                        "What is the time of onset?",
+                        "How severe is it?",
+                        "What is the nature of headache? (throbbing, tight band-like, thunderclap, lancinating)",
+                        "How does it start?",
+                        "How long does it persist?",
+                        "Is it recurrent?",
+                        "Any aggravating factor such as coughing, straining or change of posture?",
+                        "Any relieving factor?",
+                        "Is it preceded by any aura? (zigzag lines, flashing lights → migraine)",
+                        "Is it associated with fever, vomiting, weakness, blurring of vision, vertigo, nasal stuffiness, lacrimation?",
+                        "Are you taking any drugs?",
+                        "Where have you been? (malaria endemic area)",
+                        "In female: ask about pregnancy (pre-eclampsia if proteinuria and high BP)"
+                    ],
+                    causes: [
+                        "Unilateral headache preceded by flushing lights / zigzag lines → Migraine",
+                        "Headache over occiput + neck stiffness → Cervical spondylosis",
+                        "Generalized, worse in morning + drowsiness + vomiting → Raised ICP",
+                        "Generalized + fever + photophobia + neck stiffness → Meningitis",
+                        "Persistent unilateral temporal area + temporal tenderness + blurring → Temporal arteritis",
+                        "Pain on forehead, cheeks or behind the eyes → Acute sinusitis",
+                        "Bilateral extending to top of head / unilateral radiating to neck → Tension headache",
+                        "Unilateral radiating to throat/ear/eye/nose/cheeks/face → Neuralgia",
+                        "Morning headache + vomiting → Raised ICP",
+                        "Sudden dramatic onset + neck stiffness → Subarachnoid hemorrhage",
+                        "Persistent for days or weeks → Tension headache",
+                        "Throbbing → Migraine, cluster headache",
+                        "Tight band-like / pressure → Tension headache",
+                        "Thunderclap (like struck by hammer) → Subarachnoid hemorrhage",
+                        "Lancinating, paroxysmal → Trigeminal neuralgia",
+                        "Severe pain waking from sleep in early morning → Cluster headache, raised ICP",
+                        "Pain precipitated by facial movement (eating, shaving, brushing teeth) → Trigeminal/glossopharyngeal neuralgia",
+                        "Pain in jaw during chewing → Temporal arteritis",
+                        "Headache at onset of menarche/premenstrually → Migraine",
+                        "Headache + temporary visual loss / scintillating spots → Migraine",
+                        "Headache + nasal stuffiness / lacrimation → Cluster headache",
+                        "Headache + fever + incoherent talk → Cerebral malaria",
+                        "Chronic daily headache → Cervical spondylosis, migraine, tension headache, nitrates",
+                        "Red flags: First and worst headache → SAH; Thunderclap → SAH; With fever/neck stiffness → Meningitis; Cough-induced → Raised ICP"
+                    ]
+                },
+                "Joint Pain": {
+                    icon: "🦵",
+                    questions: [
+                        "Onset: Is it acute, gradual or chronic? New or recurrent?",
+                        "Any history of trauma?",
+                        "How long are you suffering from joint pain?",
+                        "Is it associated with joint swelling?",
+                        "Which joints have been involved? Number (mono/oligo/poly), symmetrical or asymmetrical, distribution (small/large)?",
+                        "Does the pain move from one joint to other? (migratory or additive)",
+                        "Does the pain worsen on activity or rest?",
+                        "Is there any morning stiffness? How long does it persist? (>1 hr → inflammatory)",
+                        "Is it associated with redness, warmth and swelling? (suggest inflammation)",
+                        "Is there any deformity?",
+                        "Any extra-articular manifestations? (skin, eye, mouth)",
+                        "Is this associated with dry mouth? (Sjogren syndrome)",
+                        "Any skin or nail problem or family history of such problem? (psoriatic arthritis)",
+                        "Is the arthritis preceded by urethritis, sexual contact, acute diarrhea? (Reiter's syndrome)",
+                        "Any history of frequent diarrhea? (IBD)",
+                        "Any history of tick bite in endemic area? (Lyme disease)"
+                    ],
+                    causes: [
+                        "Monoarticular (GRASP TH) → Gout/gonococcal, Reactive arthritis, Septic arthritis, Pseudogout/psoriatic, Tubercular, Traumatic, Hemophilic",
+                        "Polyarthritis → Rheumatic fever, RA, Seronegative arthritis, OA (nodal), SLE, Gout/pseudogout, Polymyalgia rheumatica",
+                        "DIP joint involved → OA, psoriatic arthritis, gout",
+                        "PIP + MCP joint involved → Rheumatoid arthritis",
+                        "1st MTP joint → Gout",
+                        "Sacroiliac joint → Ankylosing spondylitis",
+                        "Bilateral symmetrical joint → RA",
+                        "Asymmetrical (larger joints) → Seronegative arthritis",
+                        "Pain increased with activity, relieved by rest → Mechanical arthritis (OA)",
+                        "Pain worse with rest, improved by activity → Inflammatory arthritis",
+                        "Morning stiffness >1 hour, relieved by activity → RA",
+                        "Fleeting arthritis → Rheumatic fever, gonococcal, SLE, Lyme, drug reaction",
+                        "Deforming polyarthritis → RA, seronegative spondyloarthropathy, chronic tophaceous gout, primary generalized OA, Lyme disease",
+                        "Skin rash + oral ulcer → SLE",
+                        "Heliotrope rash + muscle weakness → Dermatomyositis",
+                        "Triad of urethritis + iritis + arthritis → Reiter's syndrome",
+                        "Psoriasis + arthritis → Psoriatic arthritis",
+                        "Bowel symptoms → Enteropathic arthritis (Crohn's, UC)",
+                        "Dryness of mouth and eyes → Sjogren's syndrome",
+                        "Oral + genital ulcers + uveitis + skin lesion → Behcet's syndrome",
+                        "History of tick bite → Lyme disease",
+                        "Note: In rheumatic fever — 'it licks the joint, kills the heart' (no deformity)"
+                    ]
+                },
+                "Dysphagia": {
+                    icon: "🍽️",
+                    questions: [
+                        "Can you show me with your finger at which level the food gets stuck?",
+                        "Is it due to solid, liquid or both? (solid → mechanical; liquid → neurogenic; both → motility disorder)",
+                        "Is it painful or painless? (painful → esophagitis/carcinoma; painless → carcinoma/achalasia)",
+                        "Is it transient, intermittent or progressive? (progressive → carcinoma/achalasia/stricture)",
+                        "Do you have nasal regurgitation or cough during swallowing?",
+                        "Is it associated with heartburn or chest discomfort?",
+                        "Did you notice bulging of the neck while eating or drinking? (→ pharyngeal pouch)"
+                    ],
+                    causes: [
+                        "Difficulty with solid more than liquid → Mechanical cause (esophageal stricture, tumor, pharyngeal web, esophagitis, dysmotility, extrinsic compression by goiter/LA in MS/aortic aneurysm/posterior mediastinal mass)",
+                        "Difficulty with liquid more than solid → Neurogenic cause (bulbar/pseudobulbar palsy); associated with nasal regurgitation, choking, spluttering",
+                        "Difficulty with both solid and liquid → Motility disorder (achalasia, diffuse esophageal spasm, pharyngeal causes, carcinoma esophagus, stricture)",
+                        "Painful dysphagia (odynophagia) → Esophagitis (herpes/candida), drug-induced, ulceration, esophageal carcinoma, achalasia",
+                        "Painless dysphagia → Carcinoma esophagus, achalasia, stricture",
+                        "Lower retrosternal obstruction → Carcinoma esophagus, achalasia, stricture",
+                        "Obstruction at cricoid level → Tumor, stricture, pharyngeal pouch",
+                        "Transient dysphagia → Esophageal infection",
+                        "Progressive dysphagia → Carcinoma, achalasia, stricture",
+                        "Intermittent (first few swallows only) → Esophageal spasm or esophageal ring",
+                        "Dysphagia + nasal regurgitation / dysphonia / choking → Bulbar/pseudobulbar palsy, left RLN palsy (Ortner syndrome in MS)",
+                        "Dysphagia + chest discomfort + heartburn → Hiatus hernia, GERD, diffuse esophageal spasm",
+                        "Dysphagia + nocturnal cough / dyspnea → GERD, achalasia",
+                        "Neck bulge or gurgle during drinking → Pharyngeal pouch",
+                        "Dysphagia + anemia + koilonychia → Plummer-Vinson syndrome (iron deficiency anemia)",
+                        "Dysphagia + palmar hyperkeratosis → Tylosis"
+                    ]
+                },
+                "Muscular Weakness": {
+                    icon: "💪",
+                    questions: [
+                        "Is it generalized or localized?",
+                        "Distribution: is it proximal or distal? (proximal → myopathy; distal → neuropathy)",
+                        "Onset: is it sudden or gradual?",
+                        "Progression: Is it ascending or descending?",
+                        "Does it worsen or improve with activity? (worsens → myasthenia gravis; improves → Eaton-Lambert)",
+                        "Is there other features such as muscle pain, skin rash, sensory loss, loss of bowel/bladder control?",
+                        "Do you take any drug or alcohol?"
+                    ],
+                    causes: [
+                        "Generalized weakness → Hypokalemia, hyperkalemia, malnutrition, chronic illness",
+                        "Localized weakness → Usually neurological (hemiplegia, paraplegia, monoplegia)",
+                        "Proximal weakness → All myopathies (dermatomyositis/polymyositis, myasthenia gravis, Eaton-Lambert, Cushing's, diabetic amyotrophy, thyrotoxicosis/hypothyroidism, polymyalgia rheumatica, osteomalacia, hyperparathyroidism, periodic paralysis, alcohol, McArdle's syndrome)",
+                        "Distal weakness → Peripheral neuropathy, myotonia dystrophica, Charcot-Marie-Tooth disease",
+                        "Sudden generalized weakness → Hypokalemic periodic paralysis, thyrotoxic periodic paralysis",
+                        "Sudden localized weakness → Stroke (hemiparesis), spinal cord compression (paraparesis)",
+                        "Weakness progressing hours to days → GBS, spinal cord lesion",
+                        "Gradual slowly progressive → Peripheral neuropathy, spinal cord lesion, MND, myasthenia gravis, myopathy",
+                        "Weakness worsens with activity → Myasthenia gravis",
+                        "Weakness improves with activity → Eaton-Lambert syndrome",
+                        "Weakness worsens in heat (hot bath) → Multiple sclerosis",
+                        "Sudden ascending paralysis → GBS",
+                        "Weakness + skin rash → Dermatomyositis",
+                        "Weakness + muscle pain → Polymyalgia rheumatica, polymyositis/dermatomyositis, hypothyroidism, diabetic myopathy, hypoparathyroidism",
+                        "Fasciculation present → Anterior horn cell or root lesion (motor neuron disease)",
+                        "Drugs causing weakness → Statins, steroids, chloroquine, zidovudine, vincristine, alcohol, cocaine",
+                        "Weakness with preserved reflex → Myotonia dystrophica, myasthenia",
+                        "Weakness with loss of reflex → Neuropathy, myopathy, LMN lesion",
+                        "Weakness with exaggerated reflex → UMN lesion (MND, amyotrophic lateral sclerosis)"
+                    ]
+                },
+                "Weight Loss": {
+                    icon: "⚖️",
+                    questions: [
+                        "How much weight did you lose? Over what period?",
+                        "How is your appetite? (good appetite + weight loss → thyrotoxicosis/DM; poor appetite → malignancy/CKD/TB)",
+                        "How is your bowel habit? (frequent diarrhea/loose motion — color, amount, blood?)",
+                        "Do you feel excessively thirsty and micturate frequently? (→ DM)",
+                        "Do you have other symptoms such as cough, fever, night sweats? (→ TB)",
+                        "Do you have palpitation? (→ thyrotoxicosis)",
+                        "Do you prefer hot or cold environment?",
+                        "Do you feel that you are getting darker than before? (→ Addison's disease)",
+                        "Do you have vomiting? Spontaneous or induced?",
+                        "Do you take alcohol or any other substance?"
+                    ],
+                    causes: [
+                        "Weight loss + low grade evening fever + cough + night sweats → Tuberculosis",
+                        "Weight loss despite good appetite / high food intake → Thyrotoxicosis, diabetes mellitus (also malabsorption, bulimia)",
+                        "Weight loss + heat intolerance + diarrhea + palpitation → Thyrotoxicosis",
+                        "Weight loss + polyphagia + polyuria + polydipsia (3P) → Diabetes mellitus",
+                        "Weight loss + diarrhea/steatorrhea → Malabsorption syndrome",
+                        "Weight loss + pigmentation + hypotension → Addison's disease",
+                        "Extreme cachexia + young female + diet control + heavy exercise + induced vomiting + amenorrhea → Anorexia nervosa",
+                        "Any malignancy, chronic illness (cardiac/pulmonary/renal failure), malnutrition → Weight loss",
+                        "HIV infection should always be ruled out",
+                        "Significant weight loss = reduction of 5% body weight or 5 kg within 6 months"
+                    ]
+                },
+                "Weight Gain": {
+                    icon: "📈",
+                    questions: [
+                        "How much weight did you gain? Over what period?",
+                        "How is your appetite? (loss of appetite + gain → hypothyroidism; increased → Cushing's/hypothalamic)",
+                        "Do you feel weak or fatigue?",
+                        "How is your bowel habit? (constipation → hypothyroidism)",
+                        "Do you prefer hot or cold environment?",
+                        "Do you take any drugs or alcohol? (steroids, TCA, sulfonylurea, beta-blockers, OCP)",
+                        "How is your menstrual cycle? Any growth of excessive hair? (for females — PCOS)",
+                        "Do you have headache? (→ pituitary cause)"
+                    ],
+                    causes: [
+                        "Weight gain + loss of appetite → Hypothyroidism (also cold intolerance, fatigue, constipation)",
+                        "Weight gain + increased appetite → Cushing's syndrome, hypoglycemia (insulinoma), hypothalamic disease",
+                        "Weight gain + central obesity + moon face + plethora + hypertension + easy bruising → Cushing's syndrome (most common cause: prolonged steroid use)",
+                        "Young obese female + irregular cycle/amenorrhea + hirsutism → PCOS",
+                        "Headache + weight gain → Pituitary cause",
+                        "Weight gain + more food intake, no other complaint → Simple obesity (may be familial)",
+                        "Drugs causing weight gain → Corticosteroids, TCA, sulfonylurea, beta blockers, estrogen-containing OCP",
+                        "Congenital: Prader-Willi, Laurence-Moon-Biedl, Klinefelter, Kallman, Noonan syndrome"
+                    ]
+                },
+                "Vertigo / Dizziness": {
+                    icon: "🌀",
+                    questions: [
+                        "What exactly do you feel? Spinning, light-headedness, fainting or unsteadiness?",
+                        "Is it constant or episodic?",
+                        "How long does each episode last?",
+                        "Is it associated with nausea or vomiting?",
+                        "Is it associated with ear symptoms? (tinnitus, hearing loss → Meniere's disease or labyrinthitis)",
+                        "Is it positional? Does it occur on turning your head?",
+                        "Is it associated with double vision, weakness or numbness? (→ central cause)",
+                        "Did you have any recent head injury?",
+                        "Are you taking any drugs? (aminoglycosides, loop diuretics, aspirin)"
+                    ],
+                    causes: [
+                        "Acute or sudden vertigo → Vestibular neuronitis, labyrinthitis, multiple sclerosis, skull fracture, Meniere's disease, CVD involving brainstem/cerebellum",
+                        "Recurrent vertigo <1 minute → Benign positional vertigo, post-traumatic vertigo, psychogenic",
+                        "Recurrent vertigo minutes to hours → Migraine, vertebrobasilar insufficiency, Meniere's disease",
+                        "Spontaneous prolonged vertigo (a day or more) → Labyrinthitis, multiple sclerosis, brainstem infarction",
+                        "Vertigo + hearing loss + tinnitus → Peripheral disorder (Meniere's disease, labyrinthitis; also ototoxic drugs like aminoglycosides)",
+                        "Vertigo + neurological disorders / chronic without cochlear symptoms → Central lesion (brainstem, cerebellum, CP angle)",
+                        "Vertigo precipitated by head movement in specific direction → Benign positional vertigo",
+                        "Vertigo + slowly progressive unilateral hearing loss + tinnitus + disequilibrium → Acoustic neuroma",
+                        "Intermittent brief vertigo + drop attack + ataxia + visual loss + double vision + confusion → Vertebrobasilar insufficiency",
+                        "Episodic recurrent vertigo + auditory symptoms + headache + photophobia + aura → Migraine",
+                        "Vertigo + facial weakness + loss of taste sensation → Ramsay Hunt syndrome",
+                        "Triad of episodic vertigo + tinnitus + progressive deafness → Meniere's disease",
+                        "Psychogenic vertigo → Associated with agoraphobia; no nystagmus; patient still attempts to work despite discomfort",
+                        "Central vertigo → Chronic, mild, bidirectional; vertical nystagmus (up/down beat) is pathognomonic",
+                        "Peripheral vertigo → Sudden, severe, unilateral, brief; unidirectional nystagmus; often with unilateral deafness/tinnitus"
+                    ]
+                },
+                "Body Swelling / Edema": {
+                    icon: "🦶",
+                    questions: [
+                        "Where did the swelling start? (face/periorbital → renal; feet ascending upwards → cardiac)",
+                        "Is it pitting or non-pitting?",
+                        "Is it unilateral or bilateral?",
+                        "How long have you had the swelling?",
+                        "Is it associated with breathlessness, oliguria or abdominal swelling?",
+                        "Do you have any history of renal, cardiac or liver disease?",
+                        "Is there any itching or change in skin color with the swelling?",
+                        "Are you taking any drugs? (nifedipine, amlodipine → pedal edema)"
+                    ],
+                    causes: [
+                        "Periorbital puffiness in morning + oliguria → Renal cause (GN or nephrotic syndrome); if preceded by skin/throat infection + smoky urine → Post-streptococcal GN",
+                        "Generalized swelling + anemia + hypertension → CRF",
+                        "Swelling starts at legs, ascends upwards + exertional dyspnea → Cardiac cause (CCF)",
+                        "Gradual whole body swelling + non-pitting + cold intolerance + lethargy → Hypothyroidism",
+                        "Generalized swelling → Also wet beriberi, cyclical edema",
+                        "Swelling + steatorrhea → Hypoalbuminemia due to malabsorption",
+                        "Abdominal swelling (ascites) starts first → CLD (cirrhosis of liver)",
+                        "Abdominal swelling + abdominal pain + anorexia + weight loss → Abdominal malignancy with peritoneal metastasis",
+                        "Abdominal swelling first, then leg swelling in advanced stage → Constrictive pericarditis",
+                        "Unilateral leg swelling + non-pitting edema → Lymphedema (filariasis)",
+                        "Unilateral painful leg swelling sudden onset → DVT",
+                        "Pitting unilateral lower limb edema → DVT, compression by tumor or lymph nodes",
+                        "Non-pitting lower limb edema → Hypothyroidism, lymphedema (filariasis, malignancy, congenital, allergic, Milroy's disease)",
+                        "Localized swelling → Angioedema",
+                        "Unilateral painful red swelling + fever in toxic patient → Cellulitis",
+                        "Gradual truncal swelling on steroid → Cushing's syndrome",
+                        "Drugs: nifedipine, amlodipine → Pedal edema",
+                        "Unilateral arm edema → Post surgery/removal of axillary lymph nodes (breast carcinoma)"
+                    ]
+                },
+                "Cold / Heat Intolerance": {
+                    icon: "🌡️",
+                    questions: [
+                        "If cold intolerance: Do you have weight gain, lethargy, increased sleepiness, constipation? (→ hypothyroidism)",
+                        "If heat intolerance or excessive sweating: Do you have increased appetite, weight loss, palpitation, diarrhea, irritability? (→ thyrotoxicosis)",
+                        "Any neck swelling?",
+                        "Any tremor of hands?"
+                    ],
+                    causes: [
+                        "Cold intolerance → Hypothyroidism, old age, excessive environmental cold",
+                        "Heat intolerance → Thyrotoxicosis, menopausal syndrome",
+                        "Excess sweating (hyperhidrosis) → Anxiety neurosis, thyrotoxicosis, pheochromocytoma, acromegaly, autonomic neuropathy, excess antipyretics, fever, severe pain, menopausal syndrome, malignancy, amyloidosis, neuroleptic malignant syndrome, drugs (thyroxin, somatostatin analog, vasopressin, epinephrine)",
+                        "Less/no sweating (anhidrosis) → Hypothyroidism, hypothermia, autonomic neuropathy, Sjogren's syndrome, anticholinergic drugs, vitamin A deficiency, hypoadrenalism"
+                    ]
+                },
+                "Polyuria": {
+                    icon: "💧",
+                    questions: [
+                        "What is the amount of water you take and void every day? (>3L/day = polyuria)",
+                        "Are you suffering from diabetes mellitus?",
+                        "Is it associated with excessive thirst? (→ DM, diabetes insipidus)",
+                        "Do you have excessive thirst with polyphagia? (→ DM)",
+                        "Are you taking any drugs? (diuretic, lithium, analgesic)",
+                        "Do you take alcohol or excessive coffee?",
+                        "Do you have excess thirst, abdominal pain, constipation? (→ hypercalcemia)",
+                        "Do you have history of head trauma, pituitary surgery or stroke? (→ cranial diabetes insipidus)",
+                        "Any history of psychiatric illness? (→ psychogenic polydipsia)"
+                    ],
+                    causes: [
+                        "Polyuria + polyphagia + polydipsia (3P) → Diabetes mellitus (also thyrotoxicosis, obesity, bulimia)",
+                        "Polyuria + excessive thirst → Diabetes insipidus, anxiety, DM",
+                        "History of head injury or surgery → Cranial diabetes insipidus",
+                        "Polyuria + constipation + abdominal pain + excess thirst → Hypercalcemia",
+                        "History of psychiatric disease → Psychogenic polydipsia",
+                        "Drugs causing polyuria → Diuretics, lithium, analgesics, cidofovir, foscarnet",
+                        "Other causes → DM, diabetes insipidus (cranial/nephrogenic), psychogenic polydipsia, hypercalcemia, CRF, excess water intake, alcohol, renal tubular disease, adrenal insufficiency"
+                    ]
+                },
+                "Hematuria": {
+                    icon: "🔴",
+                    questions: [
+                        "Is it at the beginning of micturition, at the end or throughout? (initial → urethra; terminal → bladder/prostate; total → bladder and above)",
+                        "Do you feel pain or burning during micturition? (dysuria)",
+                        "Is this associated with frequency, urgency or hesitancy?",
+                        "Do you have loin pain? Does it radiate to the groin?",
+                        "Have you noticed bleeding from any other part of the body?",
+                        "Do you have fever?",
+                        "Is it associated with nausea or vomiting?",
+                        "Have you noticed any rash? Is it associated with joint pain and swelling?",
+                        "Do you take any drugs? (anticoagulant, antiplatelet, analgesic, cyclophosphamide)",
+                        "Did you ever pass stones previously?",
+                        "Did you suffer from any kind of trauma?",
+                        "Did you suffer from skin infection or sore throat recently? (→ post-streptococcal GN)",
+                        "Do you have hypertension, exertional breathlessness and swelling of the body?",
+                        "Any family history of renal disease?",
+                        "In female: enquire whether she is menstruating.",
+                        "Occupational history — exposure to radiation or industrial chemicals like benzene?",
+                        "Have you recently traveled to any Middle Eastern country? (bilharziasis/schistosomiasis)"
+                    ],
+                    causes: [
+                        "Hematuria + dysuria → Cystitis or urethritis (UTI)",
+                        "Hematuria + >trace of protein in urine → Blood of renal origin",
+                        "Hematuria + loin pain + high grade fever with chill/rigor + nausea/vomiting → Acute pyelonephritis",
+                        "Hematuria + fever → Also infective endocarditis with renal involvement, SLE",
+                        "Hematuria + loin-to-groin pain → Renal stone (bladder stone: lower abdominal pain)",
+                        "Painful hematuria → Loin pain hematuria syndrome, UTI",
+                        "Painless hematuria → Tumor of kidney/ureter/bladder/prostate, renal TB, GN, schistosomiasis, bleeding disorders, BPH, IgA nephropathy, infective endocarditis, hypertensive nephrosclerosis, interstitial nephritis, drugs (heparin, anticoagulants)",
+                        "Hematuria + obstructive features in elderly male → BPH or carcinoma prostate",
+                        "Hematuria + previous skin/throat infection + hypertension + generalized body swelling → Acute glomerulonephritis",
+                        "Drugs: analgesics (papillary necrosis), cyclophosphamide (haemorrhagic cystitis), antibiotic (interstitial nephritis), anticoagulants/antiplatelets",
+                        "Hematuria + hypertension → Renovascular disease",
+                        "Family history of renal disease → Polycystic kidney disease",
+                        "Bleeding from multiple sources → Bleeding disorder or drug-induced",
+                        "Hematuria + bruise/purpura → Coagulation disorder, HSP, vasculitis",
+                        "Hematuria + abdominal pain + vasculitic rash over lower limbs → Henoch-Schonlein purpura",
+                        "Young fit athlete + hematuria → Exercise-induced hematuria",
+                        "Hematuria + DM or sickle cell disease → Papillary necrosis",
+                        "Recent travel to Middle East → Bilharziasis (schistosomiasis) strongly suspected"
+                    ]
+                }
+            }
+        }
+    };
+
+    let activeQType = null;
+    let activeQSubtype = null;
+
+    function renderQuestionsTypes() {
+        const typeContainer = document.getElementById("questions-type-buttons");
+        if (!typeContainer) return;
+        typeContainer.innerHTML = "";
+        typeContainer.style.display = "grid";
+        typeContainer.style.gridTemplateColumns = "repeat(auto-fill, minmax(180px, 1fr))";
+        typeContainer.style.gap = "12px";
+        typeContainer.style.marginBottom = "4px";
+
+        Object.keys(questionsData).forEach(key => {
+            const btn = document.createElement("button");
+            btn.className = "q-type-btn" + (activeQType === key ? " active" : "");
+            btn.textContent = questionsData[key].label;
+            btn.onclick = () => {
+                activeQType = key;
+                activeQSubtype = null;
+                renderQuestionsTypes();
+                renderQSubtypes();
+                document.getElementById("questions-content-area").innerHTML = "";
+            };
+            typeContainer.appendChild(btn);
+        });
+        renderQSubtypes();
+    }
+
+    function renderQSubtypes() {
+        const area = document.getElementById("questions-subtype-area");
+        if (!area) return;
+        if (!activeQType) { area.innerHTML = ""; return; }
+        const subtypes = questionsData[activeQType].subtypes;
+        area.innerHTML = "";
+        const grid = document.createElement("div");
+        grid.className = "q-subtype-grid";
+        Object.keys(subtypes).forEach(sub => {
+            const btn = document.createElement("button");
+            btn.className = "q-subtype-btn" + (activeQSubtype === sub ? " active" : "");
+            btn.textContent = (subtypes[sub].icon || "") + " " + sub;
+            btn.onclick = () => {
+                activeQSubtype = sub;
+                renderQSubtypes();
+                renderQContent();
+            };
+            grid.appendChild(btn);
+        });
+        area.appendChild(grid);
+        if (activeQSubtype) renderQContent();
+    }
+
+    function renderQContent() {
+        const area = document.getElementById("questions-content-area");
+        if (!area || !activeQType || !activeQSubtype) return;
+        const data = questionsData[activeQType].subtypes[activeQSubtype];
+        if (!data) return;
+
+        area.innerHTML = "";
+
+        // Questions card
+        const qCard = document.createElement("div");
+        qCard.className = "q-card";
+        const qTitle = document.createElement("div");
+        qTitle.className = "q-card-title";
+        qTitle.textContent = (data.icon || "") + " " + activeQSubtype + " — Questions to Ask";
+        const qUl = document.createElement("ul");
+        data.questions.forEach(q => {
+            const li = document.createElement("li");
+            li.textContent = q;
+            qUl.appendChild(li);
+        });
+        qCard.appendChild(qTitle);
+        qCard.appendChild(qUl);
+        area.appendChild(qCard);
+
+        // Causes card (only for elaboration_symptoms subtypes that have causes)
+        if (data.causes && data.causes.length > 0) {
+            const cCard = document.createElement("div");
+            cCard.className = "q-card";
+            cCard.style.borderLeftColor = "#e76f51";
+            const cTitle = document.createElement("div");
+            cTitle.className = "q-card-title";
+            cTitle.style.color = "#7c2d12";
+            cTitle.style.borderBottomColor = "#fde8df";
+            cTitle.textContent = "🔎 Causes — What This Symptom Indicates";
+            const cUl = document.createElement("ul");
+            data.causes.forEach(c => {
+                const li = document.createElement("li");
+                li.textContent = c;
+                li.style.color = "#7c2d12";
+                li.querySelector = null;
+                // highlight the → arrow part
+                const parts = c.split("→");
+                if (parts.length === 2) {
+                    li.innerHTML = "";
+                    const left = document.createTextNode(parts[0] + "→ ");
+                    const right = document.createElement("strong");
+                    right.textContent = parts[1].trim();
+                    right.style.color = "#c2410c";
+                    li.appendChild(left);
+                    li.appendChild(right);
+                } else {
+                    li.textContent = c;
+                }
+                li.style.color = "#7c2d12";
+                cUl.appendChild(li);
+            });
+            cCard.appendChild(cTitle);
+            cCard.appendChild(cUl);
+            area.appendChild(cCard);
+        }
+    }
+</script>
+</body>
+</html>
